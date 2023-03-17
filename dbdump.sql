@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `atmdb` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `atmdb`;
+CREATE DATABASE  IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mydb`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: atmdb
+-- Host: 127.0.0.1    Database: mydb
 -- ------------------------------------------------------
 -- Server version	8.0.30
 
@@ -18,61 +18,55 @@ USE `atmdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `creditkortti`
+-- Table structure for table `debit`
 --
 
-DROP TABLE IF EXISTS `creditkortti`;
+DROP TABLE IF EXISTS `debit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `creditkortti` (
-  `idCreditKortti` int NOT NULL AUTO_INCREMENT,
-  `PIN` varchar(45) DEFAULT NULL,
-  `idOmistaja` int NOT NULL,
-  `idTili` int NOT NULL,
-  PRIMARY KEY (`idCreditKortti`),
-  KEY `CreditKortti_Omistaja_idx` (`idOmistaja`),
-  KEY `CreditKortti_CreditTili_idx` (`idTili`),
-  CONSTRAINT `CreditKortti_CreditTili` FOREIGN KEY (`idTili`) REFERENCES `credittili` (`idCreditTili`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `CreditKortti_Omistaja` FOREIGN KEY (`idOmistaja`) REFERENCES `omistaja` (`idOmistaja`) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE `debit` (
+  `iddebit` int NOT NULL AUTO_INCREMENT,
+  `pin` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`iddebit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `creditkortti`
+-- Dumping data for table `debit`
 --
 
-LOCK TABLES `creditkortti` WRITE;
-/*!40000 ALTER TABLE `creditkortti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `creditkortti` ENABLE KEYS */;
+LOCK TABLES `debit` WRITE;
+/*!40000 ALTER TABLE `debit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `debit` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `debitkortti`
+-- Table structure for table `kortti`
 --
 
-DROP TABLE IF EXISTS `debitkortti`;
+DROP TABLE IF EXISTS `kortti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `debitkortti` (
-  `idDebitKortti` int NOT NULL AUTO_INCREMENT,
-  `PIN` varchar(45) DEFAULT NULL,
-  `idOmistaja` int NOT NULL,
-  `idTili` int NOT NULL,
-  PRIMARY KEY (`idDebitKortti`),
-  KEY `Kortti_Omistaja_idx` (`idOmistaja`),
-  KEY `Kortti_Tili_idx` (`idTili`),
-  CONSTRAINT `DebitKortti_Omistaja` FOREIGN KEY (`idOmistaja`) REFERENCES `omistaja` (`idOmistaja`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `DebitKortti_Tili` FOREIGN KEY (`idTili`) REFERENCES `tili` (`idTili`) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE `kortti` (
+  `idkortti` int NOT NULL,
+  `pinkoodi` int NOT NULL,
+  `id_omistaja` int NOT NULL,
+  `id_tili` int NOT NULL,
+  PRIMARY KEY (`idkortti`),
+  KEY `fk_kortti_omistaja_idx` (`id_omistaja`),
+  KEY `fk_kortti_tili1_idx` (`id_tili`),
+  CONSTRAINT `fk_kortti_omistaja` FOREIGN KEY (`id_omistaja`) REFERENCES `omistaja` (`idomistaja`),
+  CONSTRAINT `fk_kortti_tili1` FOREIGN KEY (`id_tili`) REFERENCES `tili` (`idtili`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `debitkortti`
+-- Dumping data for table `kortti`
 --
 
-LOCK TABLES `debitkortti` WRITE;
-/*!40000 ALTER TABLE `debitkortti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `debitkortti` ENABLE KEYS */;
+LOCK TABLES `kortti` WRITE;
+/*!40000 ALTER TABLE `kortti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `kortti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -83,11 +77,11 @@ DROP TABLE IF EXISTS `omistaja`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `omistaja` (
-  `idOmistaja` int NOT NULL AUTO_INCREMENT,
-  `Etunimi` varchar(45) DEFAULT NULL,
-  `sukunimi` varchar(45) DEFAULT NULL,
-  `Osoite` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idOmistaja`)
+  `idomistaja` int NOT NULL AUTO_INCREMENT,
+  `etunimi` varchar(45) NOT NULL,
+  `sukunimi` varchar(45) NOT NULL,
+  `osoite` varchar(45) NOT NULL,
+  PRIMARY KEY (`idomistaja`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,6 +95,34 @@ LOCK TABLES `omistaja` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `owner`
+--
+
+DROP TABLE IF EXISTS `owner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `owner` (
+  `idowner` int NOT NULL AUTO_INCREMENT,
+  `etunimi` varchar(45) DEFAULT NULL,
+  `sukunimi` varchar(45) DEFAULT NULL,
+  `osoite` varchar(45) NOT NULL,
+  `debit_iddebit` int NOT NULL,
+  PRIMARY KEY (`idowner`),
+  KEY `fk_owner_debit_idx` (`debit_iddebit`),
+  CONSTRAINT `fk_owner_debit` FOREIGN KEY (`debit_iddebit`) REFERENCES `debit` (`iddebit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `owner`
+--
+
+LOCK TABLES `owner` WRITE;
+/*!40000 ALTER TABLE `owner` DISABLE KEYS */;
+/*!40000 ALTER TABLE `owner` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tili`
 --
 
@@ -108,10 +130,13 @@ DROP TABLE IF EXISTS `tili`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tili` (
-  `idTili` int NOT NULL AUTO_INCREMENT,
-  `Tilinumero` varchar(255) DEFAULT NULL,
-  `Saldo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idTili`)
+  `idtili` int NOT NULL,
+  `creditSaldo` float DEFAULT NULL,
+  `creditTilinumero` int DEFAULT NULL,
+  `debitSaldo` float DEFAULT NULL,
+  `debitTilinumero` int DEFAULT NULL,
+  `luottoraja` float DEFAULT NULL,
+  PRIMARY KEY (`idtili`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,17 +157,13 @@ DROP TABLE IF EXISTS `tilitapahtumat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tilitapahtumat` (
-  `idTiliTapahtumat` int NOT NULL AUTO_INCREMENT,
-  `Päivämäärä` date DEFAULT NULL,
-  `Kelloaika` time DEFAULT NULL,
-  `Summa` int DEFAULT NULL,
-  `idTili` int DEFAULT NULL,
-  `idCreditTili` int DEFAULT NULL,
-  PRIMARY KEY (`idTiliTapahtumat`),
-  KEY `Tilitapahtuma_Tili_idx` (`idTili`),
-  KEY `TiliTapahtuma_CreditTili_idx` (`idCreditTili`),
-  CONSTRAINT `TiliTapahtuma_CreditTili` FOREIGN KEY (`idCreditTili`) REFERENCES `credittili` (`idCreditTili`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `Tilitapahtuma_Tili` FOREIGN KEY (`idTili`) REFERENCES `tili` (`idTili`) ON DELETE RESTRICT ON UPDATE CASCADE
+  `idtilitapahtumat` int NOT NULL,
+  `aika` datetime DEFAULT NULL,
+  `summa` float DEFAULT NULL,
+  `tili_idtili` int NOT NULL,
+  PRIMARY KEY (`idtilitapahtumat`),
+  KEY `fk_tilitapahtumat_tili1_idx` (`tili_idtili`),
+  CONSTRAINT `fk_tilitapahtumat_tili1` FOREIGN KEY (`tili_idtili`) REFERENCES `tili` (`idtili`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-16 17:45:16
+-- Dump completed on 2023-03-17 14:05:17
