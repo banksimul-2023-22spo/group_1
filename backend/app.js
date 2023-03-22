@@ -3,10 +3,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const dotenv=require('dotenv');
-const jwt = require('jsonwebtoken');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var omistajaRouter = require('./routes/omistaja');
 
 var app = express();
 dotenv.config();
@@ -19,5 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/omistaja', omistajaRouter);
 
 module.exports = app;
