@@ -1,3 +1,3 @@
 # group_1
 
-<img src="er_diagram.png">
+<img src="er-diagram.png">
