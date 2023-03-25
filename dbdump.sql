@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `tilitapahtumat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tilitapahtumat` (
-  `idtilitapahtumat` int NOT NULL,
+  `idtilitapahtumat` int NOT NULL AUTO_INCREMENT,
   `aika` datetime DEFAULT NULL,
   `summa` float DEFAULT NULL,
   `idtili` varchar(45) NOT NULL,
@@ -134,4 +134,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-22 13:22:28
+-- Dump completed on 2023-03-25 13:20:26
