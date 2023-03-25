@@ -8,6 +8,9 @@ const dotenv=require('dotenv');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var omistajaRouter = require('./routes/omistaja');
+var korttiRouter = require('./routes/kortti');
+var tiliRouter = require('./routes/tili');
+var tilitapahtumatRouter = require('./routes/tilitapahtumat');
 
 var app = express();
 dotenv.config();
@@ -22,5 +25,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/omistaja', omistajaRouter);
+app.use('/kortti', korttiRouter);
+app.use('/tili', tiliRouter);
+app.use('/tilitapahtumat', tilitapahtumatRouter);
 
 module.exports = app;

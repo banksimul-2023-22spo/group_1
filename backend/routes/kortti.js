@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const omistaja = require('../models/omistaja_model');
+const kortti = require('../models/kortti_model');
 
 router.get('/',function(request,response){
-    omistaja.getAll(function(err,dbResult){
+    kortti.getAll(function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -12,8 +12,8 @@ router.get('/',function(request,response){
         }
     })
 });
-router.get('/:idomistaja',function(request,response){
-    omistaja.getById(request.params.idomistaja, function(err,dbResult){
+router.get('/:idkortti',function(request,response){
+    kortti.getById(request.params.idkortti, function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -24,7 +24,7 @@ router.get('/:idomistaja',function(request,response){
 });
 router.post('/', 
 function(request, response) {
-  omistaja.add(request.body, function(err, dbResult) {
+  kortti.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -33,9 +33,9 @@ function(request, response) {
     }
   });
 });
-router.delete('/:idomistaja', 
+router.delete('/:idkortti', 
 function(request, response) {
-  omistaja.delete(request.params.idomistaja, function(err, dbResult) {
+  kortti.delete(request.params.idkortti, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -43,9 +43,9 @@ function(request, response) {
     }
   });
 });
-router.put('/:idomistaja', 
+router.put('/:idkortti', 
 function(request, response) {
-  omistaja.update(request.params.idomistaja, request.body, function(err, dbResult) {
+  kortti.update(request.params.idkortti, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {

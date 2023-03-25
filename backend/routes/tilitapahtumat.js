@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const omistaja = require('../models/omistaja_model');
+const tilitapahtumat = require('../models/tilitapahtumat_model');
 
 router.get('/',function(request,response){
-    omistaja.getAll(function(err,dbResult){
+    tilitapahtumat.getAll(function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -12,8 +12,8 @@ router.get('/',function(request,response){
         }
     })
 });
-router.get('/:idomistaja',function(request,response){
-    omistaja.getById(request.params.idomistaja, function(err,dbResult){
+router.get('/:idtilitapahtumat',function(request,response){
+    tilitapahtumat.getById(request.params.idtilitapahtumat, function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -24,7 +24,7 @@ router.get('/:idomistaja',function(request,response){
 });
 router.post('/', 
 function(request, response) {
-  omistaja.add(request.body, function(err, dbResult) {
+  tilitapahtumat.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -33,9 +33,9 @@ function(request, response) {
     }
   });
 });
-router.delete('/:idomistaja', 
+router.delete('/:idtilitapahtumat', 
 function(request, response) {
-  omistaja.delete(request.params.idomistaja, function(err, dbResult) {
+  tilitapahtumat.delete(request.params.idtilitapahtumat, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -43,9 +43,9 @@ function(request, response) {
     }
   });
 });
-router.put('/:idomistaja', 
+router.put('/:idtilitapahtumat', 
 function(request, response) {
-  omistaja.update(request.params.idomistaja, request.body, function(err, dbResult) {
+  tilitapahtumat.update(request.params.idtilitapahtumat, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
