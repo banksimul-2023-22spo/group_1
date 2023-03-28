@@ -14,8 +14,15 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void getSerialInfo();
+
+private slots:
+    void numberClickedHandler();
+    void EraseAndLoginClickhandler();
 
 private:
     Ui::MainWindow *ui;
+    QString pin;
+    QString SerialInfo = NULL;
 };
 #endif // MAINWINDOW_H
