@@ -25,9 +25,9 @@ router.post('/',
                 }
                 else {
                     console.log("wrong pinkoodi");
-                 //   console.log("pass: ", pass);
-                   // console.log("dbResult[0].pinkoodi: ", dbResult[0].pinkoodi);
-                    //console.log("idkortti: ", user);
+                 console.log("pass: ", pass);
+                 console.log("dbResult[0].pinkoodi: ", dbResult[0].pinkoodi);
+                 console.log("idkortti: ", user);
                     response.send(false);
                 }			
               }

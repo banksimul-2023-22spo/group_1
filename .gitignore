@@ -1,4 +1,5 @@
 backend/node_modules/
 frontend/build/
 frontend/*.user
+frontend/DLL_loggedin/build/
 backend/.env
