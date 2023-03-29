@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "enviroment.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QtSerialPort>
@@ -75,12 +76,21 @@ void MainWindow::getSerialInfo()
                 qDebug() << "error: " << serial.errorString();
             else{
                 qDebug() << "New data available: " << serial.bytesAvailable();
+                SerialBytes = serial.bytesAvailable();
                 QByteArray datas = serial.readAll();
                 qDebug() << datas;
                 SerialInfo = QString(datas);
                 serial.close();
                 ui->labelInfo->setText("Syötä pin koodi");
             }
+        }
+        if(SerialBytes == 16){
+            SerialInfo = SerialInfo.mid(2,11);
+            qDebug() << SerialInfo;
+        }
+        else {
+            SerialInfo = SerialInfo.mid(18,11);
+            qDebug() << SerialInfo;
         }
 
 }
@@ -92,10 +102,13 @@ void MainWindow::numberClickedHandler()
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
 
-        //qDebug() << "PIN:" << pin;
         if(pin.length()!=4){
             pin = pin + name.back();
-            ui->labelPin->setText(QString(pin));
+
+            fakePin = fakePin + "*";
+            ui->labelPin->setText(QString(fakePin));
+
+            qDebug() << "PIN:" << pin;
         }
     }
 
@@ -106,12 +119,58 @@ void MainWindow::EraseAndLoginClickhandler()
     if(SerialInfo!=NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
+        //qDebug() << "Button name:" << name;
 
         if(name == "btnErase"){
             pin = pin.left(pin.length()-1);
-            ui->labelPin->setText(QString(pin));
+
+            fakePin = fakePin.left(fakePin.length()-1);
+            ui->labelPin->setText(QString(fakePin));
+
+            qDebug() << "PIN:" << pin;
+        }
+        else {
+            QJsonObject jsonObj;
+            jsonObj.insert("idkortti",SerialInfo);
+            jsonObj.insert("pinkoodi",pin);
+
+            QString site_url=Enviroment::getBaseUrl()+"/login";
+            QNetworkRequest request((site_url));
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+            loginManager = new QNetworkAccessManager(this);
+            connect(loginManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+
+            reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
         }
     }
 
+}
+
+void MainWindow::loginSlot(QNetworkReply *reply)
+{
+    response_data=reply->readAll();
+    if(QString::compare(response_data, "false")!=0){
+        ui->labelInfo->setText("login ok");
+    }
+    else{
+        ui->labelInfo->setText("Väärä pin koodi");
+        pin.clear();
+        fakePin.clear();
+        ui->labelPin->clear();
+    }
+    qDebug()<<response_data;
+    reply->deleteLater();
+    loginManager->deleteLater();
+}
+
+const QByteArray &MainWindow::getToken() const
+{
+    return token;
+}
+
+void MainWindow::setToken(const QByteArray &newToken)
+{
+    token = newToken;
 }
 
