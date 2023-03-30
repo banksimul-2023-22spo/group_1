@@ -29,7 +29,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/release/ -lDLL_loggedin
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/debug/ -lDLL_loggedin
-else:unix: LIBS += -L$$PWD/DLL_loggedin/build/ -lDLL_loggedin
 
 INCLUDEPATH += $$PWD/DLL_loggedin
 DEPENDPATH += $$PWD/DLL_loggedin
