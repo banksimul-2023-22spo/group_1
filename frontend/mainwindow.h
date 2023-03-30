@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include <dll_loggedin.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,13 +31,15 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    DLL_loggedin DLLlogin;
 
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QByteArray token;
 
-    QString pin;
+    QString portName;
+    QString pin = NULL;
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;

@@ -1,5 +1,6 @@
-QT -= gui
-QT += widgets
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = lib
 DEFINES += DLL_LOGGEDIN_LIBRARY
@@ -11,13 +12,11 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dll_loggedin.cpp \
-    loggedwindow.cpp
+    dll_loggedin.cpp
 
 HEADERS += \
     DLL_loggedin_global.h \
-    dll_loggedin.h \
-    loggedwindow.h
+    dll_loggedin.h
 
 # Default rules for deployment.
 unix {
@@ -26,4 +25,4 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    loggedwindow.ui
+    dll_loggedin.ui

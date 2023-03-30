@@ -1,12 +1,23 @@
 #ifndef DLL_LOGGEDIN_H
 #define DLL_LOGGEDIN_H
 
-#include "DLL_loggedin_global.h"
+#include <QDialog>
+#include <DLL_loggedin_global.h>
 
-class DLL_LOGGEDIN_EXPORT DLL_loggedin
+namespace Ui {
+class DLL_loggedin;
+}
+
+class DLL_loggedin : public QDialog
 {
+    Q_OBJECT
+
 public:
-    DLL_loggedin();
+    explicit DLL_loggedin(QWidget *parent = nullptr);
+    ~DLL_loggedin();
+
+private:
+    Ui::DLL_loggedin *ui;
 };
 
 #endif // DLL_LOGGEDIN_H

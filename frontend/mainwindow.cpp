@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->btnLogin,SIGNAL(clicked()),
             this,SLOT(EraseAndLoginClickhandler()),Qt::QueuedConnection);
-
 }
 
 MainWindow::~MainWindow()
@@ -55,8 +54,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::getSerialInfo()
 {
-    QSerialPort serial;
-        serial.setPortName("COM4");
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
+        //qDebug()<<port.portName();
+        //qDebug()<<port.serialNumber();
+        //qDebug()<<port.description();
+        //qDebug()<<port.hasProductIdentifier();
+        //qDebug()<<port.vendorIdentifier();
+        //qDebug()<<port.manufacturer();
+        if (port.serialNumber()=="OL406A9004C51F7"){
+            portName = port.portName();
+            //qDebug()<<port.portName();
+        }
+    }
+
+        QSerialPort serial;
+        serial.setPortName(portName);
         if(!serial.setBaudRate(QSerialPort::Baud9600))
             qDebug() << serial.errorString();
         if(!serial.setDataBits(QSerialPort::Data7))
@@ -88,7 +100,7 @@ void MainWindow::getSerialInfo()
             SerialInfo = SerialInfo.mid(2,11);
             qDebug() << SerialInfo;
         }
-        else {
+        else{
             SerialInfo = SerialInfo.mid(18,11);
             qDebug() << SerialInfo;
         }
@@ -152,6 +164,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
+        DLLlogin.show();
     }
     else{
         ui->labelInfo->setText("Väärä pin koodi");
