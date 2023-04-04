@@ -11,9 +11,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    QTimer::singleShot(1000, &a, [&]() {
-        w.getSerialInfo();
-    });
-
     return a.exec();
 }

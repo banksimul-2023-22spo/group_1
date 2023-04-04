@@ -32,3 +32,9 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/debu
 
 INCLUDEPATH += $$PWD/DLL_loggedin
 DEPENDPATH += $$PWD/DLL_loggedin
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_endscene/build/release/ -lDLL_endscene
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_endscene/build/debug/ -lDLL_endscene
+
+INCLUDEPATH += $$PWD/DLL_endscene
+DEPENDPATH += $$PWD/DLL_endscene

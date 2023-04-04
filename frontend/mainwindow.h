@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <dll_loggedin.h>
+#include <dll_endscene.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,20 +19,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void getSerialInfo();
 
     const QByteArray &getToken() const;
     void setToken(const QByteArray &newToken);
 
 private slots:
+    void getSerialInfo();
     void numberClickedHandler();
-    void EraseAndLoginClickhandler();
+    void EraseLoginRemoveClickhandler();
 
     void loginSlot (QNetworkReply *reply);
 
 private:
     Ui::MainWindow *ui;
     DLL_loggedin DLLlogin;
+    DLL_endscene DLLendscene;
 
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;

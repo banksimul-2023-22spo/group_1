@@ -1,0 +1,12 @@
+#ifndef DLL_ENDSCENE_GLOBAL_H
+#define DLL_ENDSCENE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(DLL_ENDSCENE_LIBRARY)
+#  define DLL_ENDSCENE_EXPORT Q_DECL_EXPORT
+#else
+#  define DLL_ENDSCENE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // DLL_ENDSCENE_GLOBAL_H
