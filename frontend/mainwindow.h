@@ -26,18 +26,17 @@ public:
 private slots:
     void numberClickedHandler();
     void EraseAndLoginClickhandler();
-
+    void logOutAndClose();
     void loginSlot (QNetworkReply *reply);
 
 private:
     Ui::MainWindow *ui;
-    DLL_loggedin DLLlogin;
 
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QByteArray token;
-
+    DLL_loggedin DLLlogin;
     QString portName;
     QString pin = NULL;
     QString fakePin;

@@ -4,11 +4,14 @@
 #include <QDebug>
 #include <QtSerialPort>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QObject::connect(&DLLlogin, SIGNAL(logOutClicked()), this, SLOT(logOutAndClose()));
 
     connect(ui->btn0,SIGNAL(clicked()),
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
@@ -45,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->btnLogin,SIGNAL(clicked()),
             this,SLOT(EraseAndLoginClickhandler()),Qt::QueuedConnection);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -52,7 +57,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::getSerialInfo()
+/*void MainWindow::getSerialInfo()
 {
     Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
@@ -103,13 +108,15 @@ void MainWindow::getSerialInfo()
         else{
             SerialInfo = SerialInfo.mid(18,11);
             qDebug() << SerialInfo;
-        }
+            idkortti=SerialInfo;
 
 }
 
+}*/
+
 void MainWindow::numberClickedHandler()
 {
-    if(SerialInfo!=NULL){
+    if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -121,6 +128,7 @@ void MainWindow::numberClickedHandler()
             ui->labelPin->setText(QString(fakePin));
 
             qDebug() << "PIN:" << pin;
+
         }
     }
 
@@ -128,7 +136,7 @@ void MainWindow::numberClickedHandler()
 
 void MainWindow::EraseAndLoginClickhandler()
 {
-    if(SerialInfo!=NULL){
+    if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -143,7 +151,7 @@ void MainWindow::EraseAndLoginClickhandler()
         }
         else {
             QJsonObject jsonObj;
-            jsonObj.insert("idkortti",SerialInfo);
+            jsonObj.insert("idkortti","2222");
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -159,11 +167,24 @@ void MainWindow::EraseAndLoginClickhandler()
 
 }
 
+void MainWindow::logOutAndClose()
+{
+    // Log out and close all windows
+    DLLlogin.close();
+    close();
+
+    // Show the login window again
+
+
+}
+
 void MainWindow::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
+        SerialInfo="2222";
+        DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
     }
     else{
@@ -172,7 +193,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         fakePin.clear();
         ui->labelPin->clear();
     }
-    qDebug()<<response_data;
+    //qDebug()<<response_data;
     reply->deleteLater();
     loginManager->deleteLater();
 }

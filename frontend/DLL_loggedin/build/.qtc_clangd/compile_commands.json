@@ -25,6 +25,7 @@
         "-DQT_QML_DEBUG",
         "-DQT_WIDGETS_LIB",
         "-DQT_GUI_LIB",
+        "-DQT_NETWORK_LIB",
         "-DQT_CORE_LIB",
         "-DQ_CREATOR_RUN",
         "-I",
@@ -34,7 +35,7 @@
         "-I",
         "C:\\Qt\\Tools\\QtCreator\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include",
         "-I",
@@ -44,11 +45,13 @@
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtANGLE",
         "-I",
+        "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtNetwork",
+        "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build\\debug",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build\\debug",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\mkspecs\\win32-g++",
         "-isystem",
@@ -68,10 +71,10 @@
         "-ferror-limit=1000",
         "-x",
         "c++",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\dll_loggedin.cpp"
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\dll_loggedin.cpp"
     ],
-    "directory": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
-    "file": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/dll_loggedin.cpp"
+    "directory": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
+    "file": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/dll_loggedin.cpp"
 },
 {
     "arguments": [
@@ -99,6 +102,7 @@
         "-DQT_QML_DEBUG",
         "-DQT_WIDGETS_LIB",
         "-DQT_GUI_LIB",
+        "-DQT_NETWORK_LIB",
         "-DQT_CORE_LIB",
         "-DQ_CREATOR_RUN",
         "-I",
@@ -108,7 +112,7 @@
         "-I",
         "C:\\Qt\\Tools\\QtCreator\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include",
         "-I",
@@ -118,11 +122,13 @@
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtANGLE",
         "-I",
+        "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtNetwork",
+        "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build\\debug",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build\\debug",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\mkspecs\\win32-g++",
         "-isystem",
@@ -142,10 +148,10 @@
         "-ferror-limit=1000",
         "-x",
         "c++-header",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\DLL_loggedin_global.h"
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\DLL_loggedin_global.h"
     ],
-    "directory": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
-    "file": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/DLL_loggedin_global.h"
+    "directory": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
+    "file": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/DLL_loggedin_global.h"
 },
 {
     "arguments": [
@@ -173,6 +179,7 @@
         "-DQT_QML_DEBUG",
         "-DQT_WIDGETS_LIB",
         "-DQT_GUI_LIB",
+        "-DQT_NETWORK_LIB",
         "-DQT_CORE_LIB",
         "-DQ_CREATOR_RUN",
         "-I",
@@ -182,7 +189,7 @@
         "-I",
         "C:\\Qt\\Tools\\QtCreator\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include",
         "-I",
@@ -192,11 +199,13 @@
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtANGLE",
         "-I",
+        "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtNetwork",
+        "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build\\debug",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build\\debug",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\mkspecs\\win32-g++",
         "-isystem",
@@ -216,10 +225,10 @@
         "-ferror-limit=1000",
         "-x",
         "c++-header",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\dll_loggedin.h"
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\dll_loggedin.h"
     ],
-    "directory": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
-    "file": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/dll_loggedin.h"
+    "directory": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
+    "file": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/dll_loggedin.h"
 },
 {
     "arguments": [
@@ -247,6 +256,7 @@
         "-DQT_QML_DEBUG",
         "-DQT_WIDGETS_LIB",
         "-DQT_GUI_LIB",
+        "-DQT_NETWORK_LIB",
         "-DQT_CORE_LIB",
         "-DQ_CREATOR_RUN",
         "-I",
@@ -256,7 +266,7 @@
         "-I",
         "C:\\Qt\\Tools\\QtCreator\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include",
         "-I",
@@ -266,11 +276,13 @@
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtANGLE",
         "-I",
+        "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtNetwork",
+        "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\include\\QtCore",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build\\debug",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build\\debug",
         "-I",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build",
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build",
         "-I",
         "C:\\Qt\\5.15.2\\mingw81_64\\mkspecs\\win32-g++",
         "-isystem",
@@ -290,9 +302,9 @@
         "-ferror-limit=1000",
         "-x",
         "c++-header",
-        "C:\\Users\\jere\\Documents\\koulu\\pankkiprojekti\\group_1\\frontend\\DLL_loggedin\\build\\ui_dll_loggedin.h"
+        "C:\\Users\\Jorku\\Desktop\\group_1\\group_1\\frontend\\DLL_loggedin\\build\\ui_dll_loggedin.h"
     ],
-    "directory": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
-    "file": "C:/Users/jere/Documents/koulu/pankkiprojekti/group_1/frontend/DLL_loggedin/build/ui_dll_loggedin.h"
+    "directory": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/build/.qtc_clangd",
+    "file": "C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/build/ui_dll_loggedin.h"
 }
 ]

@@ -7,6 +7,9 @@ const tili = {
     getById: function (idtili, callback) {
         return db.query('select * from tili where idtili=?', [idtili], callback);
     },
+    getByIdkortti: function (idkortti, callback){
+        return db.query('SELECT tili.idtili FROM tili JOIN kortti ON tili.idkortti = kortti.idkortti WHERE kortti.idkortti =?',[idkortti], callback);
+    },
     add: function (tili, callback) {
         return db.query('insert into tili (idtili, credit, saldo, idkortti) values(?,?,?,?)',[tili.idtili, tili.credit, tili.saldo, tili.idkortti],callback);
         },

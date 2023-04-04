@@ -22,6 +22,16 @@ router.get('/:idtili',function(request,response){
         }
     })
 });
+router.get('/getbykortti/:idkortti',function(request,response){
+  tili.getByIdkortti(request.params.idkortti, function(err,dbResult){
+      if(err){
+          response.json(err);
+      }
+      else{
+          response.json(dbResult);
+      }
+  })
+});
 router.post('/', 
 function(request, response) {
   tili.add(request.body, function(err, dbResult) {
