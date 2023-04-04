@@ -1,0 +1,12 @@
+#ifndef DLL_LOGGEDIN_GLOBAL_H
+#define DLL_LOGGEDIN_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(DLL_LOGGEDIN_LIBRARY)
+#  define DLL_LOGGEDIN_EXPORT Q_DECL_EXPORT
+#else
+#  define DLL_LOGGEDIN_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // DLL_LOGGEDIN_GLOBAL_H
