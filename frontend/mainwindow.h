@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <dll_loggedin.h>
+#include "chooseAction.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,6 +24,8 @@ public:
     const QByteArray &getToken() const;
     void setToken(const QByteArray &newToken);
 
+    chooseAction testi;
+
 private slots:
     void numberClickedHandler();
     void EraseAndLoginClickhandler();
@@ -31,7 +34,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    DLL_loggedin DLLlogin;
+   // DLL_loggedin DLLlogin;
 
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
