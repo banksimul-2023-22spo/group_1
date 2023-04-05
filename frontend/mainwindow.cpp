@@ -69,7 +69,11 @@ MainWindow::~MainWindow()
 void MainWindow::getSerialInfo()
 {
 
-    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
+    QByteArray datas = "1234";
+    qDebug() << datas;
+    SerialInfo = QString(datas);
+    ui->labelInfo->setText("Syötä pin koodi");
+    /*Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
         //qDebug()<<port.description();
@@ -127,7 +131,8 @@ void MainWindow::getSerialInfo()
             SerialInfo = QString(datas);
             ui->labelInfo->setText("Syötä pin koodi");
         }
-    }
+
+    }*/
 
 
 }
@@ -208,11 +213,6 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         //SerialInfo="1234";
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
-          //testi.transportToken(response_data);
-          //testi.show();
-          //testi.getBalanceAndCredit("saldo");
-          //testi.getBalanceAndCredit("credit");
-
 
     }
     else{

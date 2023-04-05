@@ -52,6 +52,8 @@ private:
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;
+
     void clearAll();
+
 };
 #endif // MAINWINDOW_H

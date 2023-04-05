@@ -20,6 +20,9 @@ public:
 private:
     Ui::Transactions *ui;
     QString myData;
+
+private slots:
+    void clickerHandler();
 };
 
 #endif // MYDATA_H
