@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->btnRemove->setVisible(false);
+
+    QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+
     connect(ui->btn0,SIGNAL(clicked()),
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
 
@@ -41,10 +45,13 @@ MainWindow::MainWindow(QWidget *parent)
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
 
     connect(ui->btnErase,SIGNAL(clicked()),
-            this,SLOT(EraseAndLoginClickhandler()),Qt::QueuedConnection);
+            this,SLOT(EraseLoginRemoveClickhandler()),Qt::QueuedConnection);
 
     connect(ui->btnLogin,SIGNAL(clicked()),
-            this,SLOT(EraseAndLoginClickhandler()),Qt::QueuedConnection);
+            this,SLOT(EraseLoginRemoveClickhandler()),Qt::QueuedConnection);
+
+    connect(ui->btnRemove,SIGNAL(clicked()),
+            this,SLOT(EraseLoginRemoveClickhandler()),Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()
@@ -99,6 +106,7 @@ void MainWindow::getSerialInfo()
                 SerialInfo = QString(datas);
                 serial.close();
                 ui->labelInfo->setText("Syötä pin koodi");
+                ui->btnRemove->setVisible(true);
             }
         }
         if(SerialBytes == 16){
@@ -131,7 +139,7 @@ void MainWindow::numberClickedHandler()
 
 }
 
-void MainWindow::EraseAndLoginClickhandler()
+void MainWindow::EraseLoginRemoveClickhandler()
 {
     if(SerialInfo!=NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
@@ -146,7 +154,7 @@ void MainWindow::EraseAndLoginClickhandler()
 
             qDebug() << "PIN:" << pin;
         }
-        else {
+        else if(name == "btnLogin") {
             QJsonObject jsonObj;
             jsonObj.insert("idkortti",SerialInfo);
             jsonObj.insert("pinkoodi",pin);
@@ -159,6 +167,12 @@ void MainWindow::EraseAndLoginClickhandler()
             connect(loginManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
 
             reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+        }
+        else{
+            ui->btnRemove->setVisible(false);
+            ui->labelInfo->setText("Syötä kortti");
+            SerialInfo = QString();
+            QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
         }
     }
 
@@ -174,6 +188,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         testi.show();
         testi.getBalanceAndCredit("saldo");
         testi.getBalanceAndCredit("credit");
+
     }
     else{
         ui->labelInfo->setText("Väärä pin koodi");
