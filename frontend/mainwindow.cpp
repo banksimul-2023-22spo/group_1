@@ -15,9 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
+    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString)),
+    this, SLOT(SendIdTiliSlot(QString)));
+
     ui->btnRemove->setVisible(false);
 
-    QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+    //QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
 
 
     connect(ui->btn0,SIGNAL(clicked()),
@@ -135,6 +138,19 @@ void MainWindow::getSerialInfo()
     }*/
 
 
+
+
+void MainWindow::SendIdTiliSlot(QString tili)
+{
+
+    testi.getTili(tili);
+
+    testi.transportToken(token);
+    testi.getBalanceAndCredit("saldo");
+    testi.getBalanceAndCredit("credit");
+    testi.show();
+
+
 }
 
 void MainWindow::numberClickedHandler()
@@ -187,7 +203,9 @@ void MainWindow::EraseLoginRemoveClickhandler()
             reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
         }
         else{
+
             clearAll();
+
 
         }
     }
@@ -213,6 +231,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         //SerialInfo="1234";
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
+
 
     }
     else{

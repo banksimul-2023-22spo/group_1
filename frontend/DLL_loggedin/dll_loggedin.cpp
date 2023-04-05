@@ -43,7 +43,16 @@ void DLL_loggedin::setToken_idKortti(QByteArray a, QString b)
 
 void DLL_loggedin::btnClickedHandler()
 {
-
+    qDebug() << "tilinappia painettu";
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
+        QString text = button->text();
+        if(text == tili1){
+            qDebug() << "Button name:" << text;
+            emit sendIdTili(tili1);
+        }else if(text == tili2){
+            qDebug() << "Button name:" << text;
+            emit sendIdTili(tili2);
+        }
 }
 void DLL_loggedin::retrieveAndSetTilis() {
     // Retrieve the tilis
@@ -68,10 +77,12 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
         QString idtili1 = tilis.at(0).toObject()["idtili"].toString();
         qDebug()<<idtili1;
         ui->btnTili1->setText(idtili1);
+        tili1 = idtili1;
     }
     if (tilis.size() >= 2) {
         QString idtili2 = tilis.at(1).toObject()["idtili"].toString();
         qDebug()<<idtili2;
+        tili2 = idtili2;
         ui->btnTili2->setText(idtili2);
     }
 }

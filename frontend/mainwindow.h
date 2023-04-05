@@ -7,7 +7,9 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
-#include <chooseAction.h>
+
+#include "chooseaction.h"
+
 
 
 QT_BEGIN_NAMESPACE
@@ -28,7 +30,7 @@ public:
     chooseAction testi;
 
 private slots:
-    void getSerialInfo();
+    //void getSerialInfo();
     void numberClickedHandler();
 
     void logOutAndClose();
@@ -36,6 +38,9 @@ private slots:
     void EraseLoginRemoveClickhandler();
 
     void loginSlot (QNetworkReply *reply);
+
+    void SendIdTiliSlot(QString tili);
+
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +52,7 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QByteArray token;
+
     QString portName;
     QString pin = NULL;
     QString fakePin;

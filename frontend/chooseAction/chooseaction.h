@@ -20,6 +20,7 @@ public:
     void getBalanceAndCredit(QString);
     void getTransactions(QString, QString);
     QByteArray transportToken(QByteArray);
+    void getTili(QString);
 
 private:
     Ui::chooseAction *ui;
@@ -27,7 +28,11 @@ private:
     QByteArray response;
     QNetworkAccessManager *manager;
     QNetworkReply *reply;
+
+    QString tili;
+
     QString data;
+
 
 private slots:
     void ClickerHandler();
