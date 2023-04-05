@@ -7,6 +7,9 @@ const tilitapahtumat = {
     getById: function (idtilitapahtumat, callback) {
         return db.query('select * from tilitapahtumat where idtilitapahtumat=?', [idtilitapahtumat], callback);
     },
+    getByTiliId: function (idtili, callback) {
+        return db.query('SELECT * FROM tilitapahtumat WHERE idtili =?', [idtili], callback);
+    },
     add: function (tilitapahtumat, callback) {
         return db.query('insert into tilitapahtumat (aika, summa, idtili) values(?,?,?)',[tilitapahtumat.aika, tilitapahtumat.summa, tilitapahtumat.idtili],callback);
         },

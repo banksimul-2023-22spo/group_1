@@ -61,6 +61,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::getSerialInfo()
 {
+    QByteArray datas = "1234";
+    qDebug() << datas;
+    SerialInfo = QString(datas);
+    ui->labelInfo->setText("Syötä pin koodi");
+    /*
     Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
@@ -112,7 +117,7 @@ void MainWindow::getSerialInfo()
             SerialInfo = SerialInfo.mid(18,11);
             qDebug() << SerialInfo;
         }
-
+*/
 }
 
 void MainWindow::numberClickedHandler()
@@ -178,8 +183,12 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
-        DLLlogin.show();
-        DLLendscene.show();
+
+        testi.transportToken(response_data);
+        testi.show();
+        testi.getBalanceAndCredit("saldo");
+        testi.getBalanceAndCredit("credit");
+
     }
     else{
         ui->labelInfo->setText("Väärä pin koodi");
