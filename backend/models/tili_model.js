@@ -10,7 +10,7 @@ const tili = {
 
     getByIdkortti: function (idkortti, callback){
         return db.query('SELECT tili.idtili FROM tili JOIN kortti ON tili.idkortti = kortti.idkortti WHERE kortti.idkortti =?',[idkortti], callback);
-
+    },
     getSaldoById: function (idtili, callback) {
         return db.query('select saldo from tili where idtili=?', [idtili], callback);
     },

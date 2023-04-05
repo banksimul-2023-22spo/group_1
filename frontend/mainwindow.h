@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
-#include "chooseAction.h"
+#include <chooseAction.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -35,7 +35,6 @@ private slots:
 
     void EraseLoginRemoveClickhandler();
 
-
     void loginSlot (QNetworkReply *reply);
 
 private:
@@ -48,11 +47,11 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QByteArray token;
-    DLL_loggedin DLLlogin;
     QString portName;
     QString pin = NULL;
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;
+    void clearAll();
 };
 #endif // MAINWINDOW_H
