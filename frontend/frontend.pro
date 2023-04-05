@@ -39,9 +39,10 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_endscene/build/debu
 INCLUDEPATH += $$PWD/DLL_endscene
 DEPENDPATH += $$PWD/DLL_endscene
 
+
+
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/chooseAction/build/release/ -lchooseAction
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/chooseAction/build/debug/ -lchooseAction
 
 INCLUDEPATH += $$PWD/chooseAction
 DEPENDPATH += $$PWD/chooseAction
-

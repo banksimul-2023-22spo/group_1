@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
 
+
     connect(ui->btn0,SIGNAL(clicked()),
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
 
@@ -62,7 +63,11 @@ MainWindow::~MainWindow()
 void MainWindow::getSerialInfo()
 {
 
-    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
+    QByteArray datas = "1234";
+    qDebug() << datas;
+    SerialInfo = QString(datas);
+    ui->labelInfo->setText("Syötä pin koodi");
+    /*Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
         //qDebug()<<port.description();
@@ -119,7 +124,8 @@ void MainWindow::getSerialInfo()
             SerialInfo = QString(datas);
             ui->labelInfo->setText("Syötä pin koodi");
         }
-    }
+
+    }*/
 
 }
 
@@ -189,8 +195,9 @@ void MainWindow::loginSlot(QNetworkReply *reply)
 
         testi.transportToken(response_data);
         testi.show();
-        testi.getBalanceAndCredit("saldo");
         testi.getBalanceAndCredit("credit");
+        testi.getBalanceAndCredit("saldo");
+        testi.getTransactions("no", "2");
 
     }
     else{

@@ -17,8 +17,8 @@ class chooseAction : public QDialog
 public:
     explicit chooseAction(QWidget *parent = nullptr);
     ~chooseAction();
-
     void getBalanceAndCredit(QString);
+    void getTransactions(QString, QString);
     QByteArray transportToken(QByteArray);
 
 private:
@@ -27,11 +27,11 @@ private:
     QByteArray response;
     QNetworkAccessManager *manager;
     QNetworkReply *reply;
+    QString data;
 
 private slots:
     void ClickerHandler();
     void logOutClickerHandler();
-    //void getMyDataSlot(QNetworkReply *reply);
 
 
 };

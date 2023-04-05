@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>531</height>
+    <width>741</width>
+    <height>528</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLabel" name="BalanceText">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>110</y>
+     <x>30</x>
+     <y>220</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -34,8 +34,8 @@
   <widget class="QLabel" name="CreditText">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>160</y>
+     <x>30</x>
+     <y>270</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -52,9 +52,9 @@
   <widget class="QLabel" name="Balance">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>110</y>
-     <width>261</width>
+     <x>120</x>
+     <y>220</y>
+     <width>211</width>
      <height>31</height>
     </rect>
    </property>
@@ -70,9 +70,9 @@
   <widget class="QLabel" name="Credit">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>160</y>
-     <width>261</width>
+     <x>120</x>
+     <y>270</y>
+     <width>211</width>
      <height>31</height>
     </rect>
    </property>
@@ -88,8 +88,8 @@
   <widget class="QPushButton" name="Withdraw">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>260</y>
+     <x>20</x>
+     <y>350</y>
      <width>141</width>
      <height>41</height>
     </rect>
@@ -106,8 +106,8 @@
   <widget class="QPushButton" name="Transactions">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>330</y>
+     <x>580</x>
+     <y>350</y>
      <width>141</width>
      <height>41</height>
     </rect>
@@ -125,7 +125,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>480</y>
+     <y>490</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -138,13 +138,23 @@
    <property name="geometry">
     <rect>
      <x>640</x>
-     <y>480</y>
+     <y>490</y>
      <width>91</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>kirjaudu ulos</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>220</y>
+     <width>371</width>
+     <height>121</height>
+    </rect>
    </property>
   </widget>
  </widget>

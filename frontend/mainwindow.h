@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
-#include "chooseAction.h"
+#include <chooseAction.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -51,5 +51,6 @@ private:
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;
+
 };
 #endif // MAINWINDOW_H

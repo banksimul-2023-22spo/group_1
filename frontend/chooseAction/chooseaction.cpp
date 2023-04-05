@@ -12,6 +12,7 @@ chooseAction::chooseAction(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
     connect(ui->Withdraw,SIGNAL(clicked()),
             this,SLOT(ClickerHandler()),Qt::QueuedConnection);
 
@@ -55,14 +56,16 @@ void chooseAction::getBalanceAndCredit(QString balOrCred)
                 QJsonObject jsonObj = jsonDoc.object();
 
                 float saldo = jsonObj["saldo"].toDouble();
-                QString saldoString = QString::number(saldo);
+                float credit = jsonObj["credit"].toDouble();
+                QString saldoValue = QString::number(saldo);
+                QString CreditValue = QString::number(credit);
 
                 if(balOrCred == "saldo"){
-                    ui->Balance->setText(saldoString);
+                    ui->Balance->setText(saldoValue);
                     qDebug() << balOrCred+": "<<response;
                 }
                 else if(balOrCred == "credit"){
-                    ui->Credit->setText(saldoString);
+                    ui->Credit->setText(CreditValue);
                     qDebug() << balOrCred+": "<<response;
                 }
 
@@ -74,17 +77,9 @@ void chooseAction::getBalanceAndCredit(QString balOrCred)
         });
 }
 
-void chooseAction::ClickerHandler()
+void chooseAction::getTransactions(QString showAll, QString idtili)
 {
-    QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString name = button->objectName();
-    if(name == "Withdraw"){
-        qDebug() << "Button name:" << name;
-    }
-    else if(name == "Transactions"){
-        qDebug() << "Button name:" << name;
-
-        QString site_url=Enviroment::getBaseUrl()+"/tilitapahtumat/getbytiliid/2";
+        QString site_url=Enviroment::getBaseUrl()+"/tilitapahtumat/getbytiliid/"+idtili;
         QNetworkRequest request((site_url));
 
         QString web_token = tokenValue;
@@ -92,8 +87,6 @@ void chooseAction::ClickerHandler()
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         QNetworkReply *reply = manager->get(request);
-
-
 
         connect(reply, &QNetworkReply::finished, [=]() {
             if (reply->error() == QNetworkReply::NoError) {
@@ -103,30 +96,57 @@ void chooseAction::ClickerHandler()
                 QJsonDocument json_doc = QJsonDocument::fromJson(response.toUtf8());
                 QJsonArray json_array = json_doc.array();
                 QJsonObject json_obj = json_doc.object();
-                QString data;
-                foreach (const QJsonValue &value, json_array) {
-                    QJsonObject json_obj = value.toObject();
-                    data += json_obj["idtilitapahtumat"].toString()+" | "+json_obj["aika"].toString()+" | "+QString::number(json_obj["summa"].toInt())+" | "+json_obj["idtili"].toString()+"\r";}
 
-               // data=json_obj["aika"].toString()+"\r\n"+json_obj["summa"].toString()+json_obj["idtili"].toString()+"\r\n"+json_obj["idtilitapahtumat"].toString()+"\r\n";
+
+                QString data;
+                qDebug()<<data;
+                foreach (const QJsonValue &value, json_array){
+                    QJsonObject json_obj = value.toObject();
+                    float summa = json_obj["summa"].toDouble();
+                    QString summaValue = QString::number(summa);
+                    QString aikaValue = json_obj["aika"].toString();
+                    QString date =  aikaValue.left(10);
+                    QString time =  aikaValue.right(15);
+                    time =  time.mid(2,8);
+                    qDebug()<<summaValue;
+                    data += "Päivämäärä:  "+ date +"   "+ time +"    |    -"+ summaValue +"€\n";
+                }
 
                 qDebug()<<data;
-                Transactions *objTransactions=new Transactions(this);
-                objTransactions->setMyData(data);
-                objTransactions->open();
+                if(showAll == "no"){
+                    ui->listWidget->addItem(data);
+                }
 
-                reply->deleteLater();
-                manager->deleteLater();
-
+                if(showAll == "yes"){
+                    Transactions *objTransactions=new Transactions(this);
+                    objTransactions->setMyData(data);
+                    qDebug()<<data;
+                    objTransactions->open();
+                    reply->deleteLater();
+                    manager->deleteLater();
+                }
             }
         });
 
+}
+
+void chooseAction::ClickerHandler()
+{
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
+    QString name = button->objectName();
+    if(name == "Withdraw"){
+        qDebug() << "Button name:" << name;
+
+    }
+    else if(name == "Transactions"){
+        qDebug() << "Button name:" << name;
+        getTransactions("yes", "2");
 
     }
     else if(name == "Back"){
         qDebug() << "Button name:" << name;
         close();
-    }
+    }  
 }
 
 void chooseAction::logOutClickerHandler()
