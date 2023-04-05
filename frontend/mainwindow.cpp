@@ -61,11 +61,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::getSerialInfo()
 {
-    QByteArray datas = "1234";
-    qDebug() << datas;
-    SerialInfo = QString(datas);
-    ui->labelInfo->setText("Syötä pin koodi");
-    /*
+
     Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
@@ -76,48 +72,55 @@ void MainWindow::getSerialInfo()
         if (port.serialNumber()=="OL406A9004C51F7"){
             portName = port.portName();
             //qDebug()<<port.portName();
+
+            QSerialPort serial;
+            serial.setPortName(portName);
+            if(!serial.setBaudRate(QSerialPort::Baud9600))
+                qDebug() << serial.errorString();
+            if(!serial.setDataBits(QSerialPort::Data7))
+                qDebug() << serial.errorString();
+            if(!serial.setParity(QSerialPort::EvenParity))
+                qDebug() << serial.errorString();
+            if(!serial.setFlowControl(QSerialPort::HardwareControl))
+                qDebug() << serial.errorString();
+            if(!serial.setStopBits(QSerialPort::OneStop))
+                qDebug() << serial.errorString();
+            if(!serial.open(QIODevice::ReadOnly))
+                qDebug() << serial.errorString();
+            qDebug() << serial.bytesAvailable();
+            while(serial.isOpen())
+            {
+                if(!serial.waitForReadyRead(-1)) //block until new data arrives
+                    qDebug() << "error: " << serial.errorString();
+                else{
+                    qDebug() << "New data available: " << serial.bytesAvailable();
+                    SerialBytes = serial.bytesAvailable();
+                    QByteArray datas = serial.readAll();
+                    qDebug() << datas;
+                    SerialInfo = QString(datas);
+                    serial.close();
+                    ui->labelInfo->setText("Syötä pin koodi");
+                    ui->btnRemove->setVisible(true);
+                }
+            }
+            if(SerialBytes == 16){
+                SerialInfo = SerialInfo.mid(2,11);
+                qDebug() << SerialInfo;
+            }
+            else{
+                SerialInfo = SerialInfo.mid(18,11);
+                qDebug() << SerialInfo;
+            }
+
+        }
+        else{
+            QByteArray datas = "1234";
+            qDebug() << datas;
+            SerialInfo = QString(datas);
+            ui->labelInfo->setText("Syötä pin koodi");
         }
     }
 
-        QSerialPort serial;
-        serial.setPortName(portName);
-        if(!serial.setBaudRate(QSerialPort::Baud9600))
-            qDebug() << serial.errorString();
-        if(!serial.setDataBits(QSerialPort::Data7))
-            qDebug() << serial.errorString();
-        if(!serial.setParity(QSerialPort::EvenParity))
-            qDebug() << serial.errorString();
-        if(!serial.setFlowControl(QSerialPort::HardwareControl))
-            qDebug() << serial.errorString();
-        if(!serial.setStopBits(QSerialPort::OneStop))
-            qDebug() << serial.errorString();
-        if(!serial.open(QIODevice::ReadOnly))
-            qDebug() << serial.errorString();
-        qDebug() << serial.bytesAvailable();
-        while(serial.isOpen())
-        {
-            if(!serial.waitForReadyRead(-1)) //block until new data arrives
-                qDebug() << "error: " << serial.errorString();
-            else{
-                qDebug() << "New data available: " << serial.bytesAvailable();
-                SerialBytes = serial.bytesAvailable();
-                QByteArray datas = serial.readAll();
-                qDebug() << datas;
-                SerialInfo = QString(datas);
-                serial.close();
-                ui->labelInfo->setText("Syötä pin koodi");
-                ui->btnRemove->setVisible(true);
-            }
-        }
-        if(SerialBytes == 16){
-            SerialInfo = SerialInfo.mid(2,11);
-            qDebug() << SerialInfo;
-        }
-        else{
-            SerialInfo = SerialInfo.mid(18,11);
-            qDebug() << SerialInfo;
-        }
-*/
 }
 
 void MainWindow::numberClickedHandler()
