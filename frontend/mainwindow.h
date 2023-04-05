@@ -7,7 +7,9 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
+
 #include "chooseaction.h"
+
 
 
 QT_BEGIN_NAMESPACE
@@ -35,7 +37,6 @@ private slots:
 
     void EraseLoginRemoveClickhandler();
 
-
     void loginSlot (QNetworkReply *reply);
 
     void SendIdTiliSlot(QString tili);
@@ -57,5 +58,8 @@ private:
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;
+
+    void clearAll();
+
 };
 #endif // MAINWINDOW_H
