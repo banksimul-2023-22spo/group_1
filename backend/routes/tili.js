@@ -22,19 +22,32 @@ router.get('/:idtili',function(request,response){
         }
     })
 });
-router.get('/:idtili/saldo',function(request,response){
-  tili.getSaldoById(request.params.idtili, function(err,dbResult){
+
+router.get('/getbykortti/:idkortti',function(request,response){
+  tili.getByIdkortti(request.params.idkortti, function(err,dbResult){
       if(err){
           response.json(err);
       }
       else{
+
+          response.json(dbResult);
+      }
+  });
+});
+
+router.get('/:idtili/saldo',function(request,response){
+  tili.getSaldoById(request.params.idtili, function(err,dbResult){
+        if(err){
+          response.json(err);
+        }
+        else{
           if (dbResult.length > 0) {
               const saldo = dbResult[0].saldo;
               response.json({saldo: saldo});
           } else {
               response.status(404).json({message: 'Tili not found'});
           }
-      }
+        }
   });
 });
 router.get('/:idtili/credit',function(request,response){
@@ -51,6 +64,7 @@ router.get('/:idtili/credit',function(request,response){
           }
       }
   });
+
 });
 router.post('/', 
 function(request, response) {

@@ -4,11 +4,16 @@
 #include <QDebug>
 #include <QtSerialPort>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+    QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
+    this, SLOT(logOutAndClose()));
 
     ui->btnRemove->setVisible(false);
 
@@ -53,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->btnRemove,SIGNAL(clicked()),
             this,SLOT(EraseLoginRemoveClickhandler()),Qt::QueuedConnection);
+
 }
 
 MainWindow::~MainWindow()
@@ -119,6 +125,7 @@ void MainWindow::getSerialInfo()
 
         }
         else{
+
             QByteArray datas = "1234";
             qDebug() << datas;
             SerialInfo = QString(datas);
@@ -126,6 +133,7 @@ void MainWindow::getSerialInfo()
         }
 
     }*/
+
 
 }
 
@@ -143,6 +151,7 @@ void MainWindow::numberClickedHandler()
             ui->labelPin->setText(QString(fakePin));
 
             qDebug() << "PIN:" << pin;
+
         }
     }
 
@@ -178,12 +187,21 @@ void MainWindow::EraseLoginRemoveClickhandler()
             reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
         }
         else{
-            ui->btnRemove->setVisible(false);
-            ui->labelInfo->setText("Syötä kortti");
-            SerialInfo = QString();
-            QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+            clearAll();
+
         }
     }
+
+}
+
+void MainWindow::logOutAndClose()
+{
+    // Log out and close all windows
+    DLLlogin.close();
+    clearAll();
+
+    // Show the login window again
+
 
 }
 
@@ -192,12 +210,9 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
-
-        testi.transportToken(response_data);
-        testi.show();
-        testi.getBalanceAndCredit("credit");
-        testi.getBalanceAndCredit("saldo");
-        testi.getTransactions("no", "2");
+        //SerialInfo="1234";
+        DLLlogin.setToken_idKortti(response_data,SerialInfo);
+        DLLlogin.show();
 
     }
     else{
@@ -206,9 +221,21 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         fakePin.clear();
         ui->labelPin->clear();
     }
-    qDebug()<<response_data;
+    //qDebug()<<response_data;
     reply->deleteLater();
     loginManager->deleteLater();
+}
+
+void MainWindow::clearAll()
+{
+    ui->labelInfo->setText("Syötä kortti");
+    ui->labelPin->clear();
+    ui->btnRemove->setVisible(false);
+    SerialInfo.clear();
+    fakePin.clear();
+    pin.clear();
+    token.clear();
+    QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
 }
 
 const QByteArray &MainWindow::getToken() const
