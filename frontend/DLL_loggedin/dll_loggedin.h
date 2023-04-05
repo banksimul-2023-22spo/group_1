@@ -22,7 +22,7 @@ public:
 
 signals:
     void logOutClicked();
-
+    void sendIdTili(QString);
 
 private slots:
     void btnClickedHandler();
@@ -32,7 +32,8 @@ private slots:
 
 private:
     void retrieveAndSetTilis();
-
+    QString tili1;
+    QString tili2;
     Ui::DLL_loggedin *ui;
     QByteArray token;
     QString idkortti;

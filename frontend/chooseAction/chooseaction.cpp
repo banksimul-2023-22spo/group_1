@@ -37,9 +37,14 @@ QByteArray chooseAction::transportToken(QByteArray token)
     return 0;
 }
 
+void chooseAction::getTili(QString a)
+{
+    tili=a;
+}
+
 void chooseAction::getBalanceAndCredit(QString balOrCred)
 {
-        QString site_url=Enviroment::getBaseUrl()+"/tili/2/"+balOrCred;
+        QString site_url=Enviroment::getBaseUrl()+"/tili/"+tili+"/"+balOrCred;
         QNetworkRequest request((site_url));
 
         QString web_token = tokenValue;
