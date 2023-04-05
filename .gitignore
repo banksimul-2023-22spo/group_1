@@ -3,8 +3,9 @@ frontend/build/
 frontend/*.user
 frontend/DLL_loggedin/*.user
 frontend/DLL_endscene/*.user
+frontend/chooseAction/*.user
 frontend/DLL_loggedin/build/
 frontend/DLL_endscene/build/
 backend/.env
 frontend/chooseAction/build/
-
+frontend/chooseAction/*.user.228d188 
