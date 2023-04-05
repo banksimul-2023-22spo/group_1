@@ -266,6 +266,24 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnRemove">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>380</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Remove card</string>
+    </property>
+   </widget>
    <zorder>btn9</zorder>
    <zorder>labelInfo</zorder>
    <zorder>btn3</zorder>
@@ -280,6 +298,7 @@
    <zorder>btnErase</zorder>
    <zorder>btnLogin</zorder>
    <zorder>labelPin</zorder>
+   <zorder>btnRemove</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
