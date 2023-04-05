@@ -1,6 +1,8 @@
 backend/node_modules/
 frontend/build/
 frontend/*.user
+frontend/DLL_loggedin/*.user
+frontend/DLL_endscene/*.user
 frontend/DLL_loggedin/build/
 frontend/DLL_endscene/build/
 backend/.env
