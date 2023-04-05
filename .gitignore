@@ -3,3 +3,4 @@ frontend/build/
 frontend/*.user
 frontend/DLL_loggedin/build/
 backend/.env
+frontend/chooseAction/build/
