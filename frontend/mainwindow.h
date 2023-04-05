@@ -30,7 +30,11 @@ public:
 private slots:
     void getSerialInfo();
     void numberClickedHandler();
+
+    void logOutAndClose();
+
     void EraseLoginRemoveClickhandler();
+
 
     void loginSlot (QNetworkReply *reply);
 
@@ -40,12 +44,11 @@ private:
     DLL_loggedin DLLlogin;
     DLL_endscene DLLendscene;
 
-
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QByteArray token;
-
+    DLL_loggedin DLLlogin;
     QString portName;
     QString pin = NULL;
     QString fakePin;
