@@ -29,7 +29,7 @@ void Transactions::setMyData(const QString &newMyData)
     textEdit->setReadOnly(true); // set the text edit to be read-only
     textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn); // set the vertical scrollbar policy
     textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    textEdit->setGeometry(50, 120, 400, 150);
+    textEdit->setGeometry(50, 50, 400, 160);
     textEdit->setText(myData);
 
 }

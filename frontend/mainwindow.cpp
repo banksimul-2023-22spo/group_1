@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QObject::connect(&testi, SIGNAL(logOutClicked()),
+    this, SLOT(logOutAndClose()));
 
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
@@ -69,14 +71,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::getSerialInfo()
+/*void MainWindow::getSerialInfo()
 {
 
     QByteArray datas = "1234";
     qDebug() << datas;
     SerialInfo = QString(datas);
     ui->labelInfo->setText("Syötä pin koodi");
-    /*Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
+
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
         //qDebug()<<port.description();
@@ -142,20 +145,18 @@ void MainWindow::getSerialInfo()
 
 void MainWindow::SendIdTiliSlot(QString tili)
 {
-
-    testi.getTili(tili);
-
     testi.transportToken(token);
+    testi.getTili(tili);
+    testi.getTransactions("no");
     testi.getBalanceAndCredit("saldo");
     testi.getBalanceAndCredit("credit");
     testi.show();
-
 
 }
 
 void MainWindow::numberClickedHandler()
 {
-    if(SerialInfo!=NULL){
+    if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -175,7 +176,7 @@ void MainWindow::numberClickedHandler()
 
 void MainWindow::EraseLoginRemoveClickhandler()
 {
-    if(SerialInfo!=NULL){
+    if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -190,7 +191,7 @@ void MainWindow::EraseLoginRemoveClickhandler()
         }
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
-            jsonObj.insert("idkortti",SerialInfo);
+            jsonObj.insert("idkortti","1234");
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -216,6 +217,7 @@ void MainWindow::logOutAndClose()
 {
     // Log out and close all windows
     DLLlogin.close();
+    testi.close();
     clearAll();
 
     // Show the login window again
@@ -228,10 +230,10 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
-        //SerialInfo="1234";
+        SerialInfo="1234";
+        token = response_data;
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
-
 
     }
     else{

@@ -25,6 +25,8 @@ chooseAction::chooseAction(QWidget *parent) :
     connect(ui->logOut,SIGNAL(clicked()),
             this,SLOT(logOutClickerHandler()),Qt::QueuedConnection);
 
+    connect(ui->logOut,SIGNAL(clicked()),
+            this,SLOT(logOutClickerHandler()),Qt::QueuedConnection);
 }
 
 chooseAction::~chooseAction()
@@ -35,12 +37,21 @@ chooseAction::~chooseAction()
 QByteArray chooseAction::transportToken(QByteArray token)
 {
     tokenValue = token;
+    qDebug()<<"tämän pitäis olla token: "<<token;
     return 0;
 }
 
 void chooseAction::getTili(QString a)
 {
-    tili=a;
+    tili = a;
+    qDebug()<<tili;
+}
+
+void chooseAction::clearAll()
+{
+    ui->Balance->clear();
+    ui->Credit->clear();
+    ui->listWidget->clear();
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)
@@ -82,9 +93,9 @@ void chooseAction::getBalanceAndCredit(QString balOrCred)
         });
 }
 
-void chooseAction::getTransactions(QString showAll, QString idtili)
+void chooseAction::getTransactions(QString showAll)
 {
-        QString site_url=Enviroment::getBaseUrl()+"/tilitapahtumat/getbytiliid/"+idtili;
+        QString site_url=Enviroment::getBaseUrl()+"/tilitapahtumat/getbytiliid/"+tili;
         QNetworkRequest request((site_url));
 
         QString web_token = tokenValue;
@@ -96,13 +107,10 @@ void chooseAction::getTransactions(QString showAll, QString idtili)
         connect(reply, &QNetworkReply::finished, [=]() {
             if (reply->error() == QNetworkReply::NoError) {
                 QString response = reply->readAll();
-
-                qDebug()<<response;
+                qDebug()<<"response: "<<response;
                 QJsonDocument json_doc = QJsonDocument::fromJson(response.toUtf8());
                 QJsonArray json_array = json_doc.array();
                 QJsonObject json_obj = json_doc.object();
-
-
                 QString data;
                 qDebug()<<data;
                 foreach (const QJsonValue &value, json_array){
@@ -113,13 +121,17 @@ void chooseAction::getTransactions(QString showAll, QString idtili)
                     QString date =  aikaValue.left(10);
                     QString time =  aikaValue.right(15);
                     time =  time.mid(2,8);
+
                     qDebug()<<summaValue;
                     data += "Päivämäärä:  "+ date +"   "+ time +"    |    -"+ summaValue +"€\n";
+
                 }
 
                 qDebug()<<data;
                 if(showAll == "no"){
-                    ui->listWidget->addItem(data);
+                    QStringList lines = data.split("\n");
+                    QString lessData = lines.mid(0, 7).join("\n");;
+                    ui->listWidget->addItem(lessData);
                 }
 
                 if(showAll == "yes"){
@@ -130,6 +142,9 @@ void chooseAction::getTransactions(QString showAll, QString idtili)
                     reply->deleteLater();
                     manager->deleteLater();
                 }
+            }
+            else{
+                qDebug() << "error in connecting to database: " << reply->errorString();
             }
         });
 
@@ -145,18 +160,20 @@ void chooseAction::ClickerHandler()
     }
     else if(name == "Transactions"){
         qDebug() << "Button name:" << name;
-        getTransactions("yes", "2");
+        getTransactions("yes");
 
     }
     else if(name == "Back"){
         qDebug() << "Button name:" << name;
+        clearAll();
         close();
     }  
 }
 
 void chooseAction::logOutClickerHandler()
 {
-
+    clearAll();
+    emit logOutClicked();
 }
 
 

@@ -18,9 +18,10 @@ public:
     explicit chooseAction(QWidget *parent = nullptr);
     ~chooseAction();
     void getBalanceAndCredit(QString);
-    void getTransactions(QString, QString);
+    void getTransactions(QString);
     QByteArray transportToken(QByteArray);
     void getTili(QString);
+    void clearAll();
 
 private:
     Ui::chooseAction *ui;
@@ -28,16 +29,15 @@ private:
     QByteArray response;
     QNetworkAccessManager *manager;
     QNetworkReply *reply;
-
     QString tili;
-
     QString data;
-
 
 private slots:
     void ClickerHandler();
     void logOutClickerHandler();
 
+signals:
+    void logOutClicked();
 
 };
 
