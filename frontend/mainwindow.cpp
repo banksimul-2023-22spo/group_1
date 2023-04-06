@@ -3,11 +3,13 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QtSerialPort>
+#include <QAudio>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+     bts("C:/Users/Jorku/Desktop/group_1/group_1/frontend/Äänet/buttonclick.wav")
 {
     ui->setupUi(this);
 
@@ -143,8 +145,12 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::SendIdTiliSlot(QString tili)
+void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
+
+
+    testi.getTili(tili,etunimi,sukunimi);
+
     testi.transportToken(token);
     testi.getTili(tili);
     testi.getTransactions("no");
@@ -156,6 +162,9 @@ void MainWindow::SendIdTiliSlot(QString tili)
 
 void MainWindow::numberClickedHandler()
 {
+
+   bts.play();
+
     if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
@@ -176,6 +185,9 @@ void MainWindow::numberClickedHandler()
 
 void MainWindow::EraseLoginRemoveClickhandler()
 {
+
+    bts.play();
+
     if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
@@ -191,7 +203,11 @@ void MainWindow::EraseLoginRemoveClickhandler()
         }
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
+
             jsonObj.insert("idkortti","1234");
+
+            jsonObj.insert("idkortti","2222");
+
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -230,8 +246,12 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
+
         SerialInfo="1234";
         token = response_data;
+
+        SerialInfo="2222";        
+
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
 
@@ -256,7 +276,7 @@ void MainWindow::clearAll()
     fakePin.clear();
     pin.clear();
     token.clear();
-    QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+    //QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
 }
 
 const QByteArray &MainWindow::getToken() const

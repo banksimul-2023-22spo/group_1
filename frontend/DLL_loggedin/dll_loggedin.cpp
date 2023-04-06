@@ -1,12 +1,23 @@
 #include "dll_loggedin.h"
+
 #include "ui_dll_loggedin.h"
 #include <QDebug>
+#include <QSound>
 
 DLL_loggedin::DLL_loggedin(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DLL_loggedin)
+    ui(new Ui::DLL_loggedin),
+    bts("C:/Users/Jorku/Desktop/group_1/group_1/frontend/Äänet/buttonclick.wav")
+
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/bankphoto.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
+
+
     qDebug()<<"dll olio luotu";
 
     connect(ui->btnTili1,SIGNAL(clicked()),
@@ -43,15 +54,17 @@ void DLL_loggedin::setToken_idKortti(QByteArray a, QString b)
 
 void DLL_loggedin::btnClickedHandler()
 {
-    qDebug() << "tilinappia painettu";
+
+    bts.play();
+
     QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString text = button->text();
         if(text == tili1){
-            qDebug() << "Button name:" << text;
-            emit sendIdTili(tili1);
+          //  qDebug() << "Button name:" << text;
+            emit sendIdTili(tili1,etunimi,sukunimi);
         }else if(text == tili2){
-            qDebug() << "Button name:" << text;
-            emit sendIdTili(tili2);
+          //  qDebug() << "Button name:" << text;
+            emit sendIdTili(tili2,etunimi,sukunimi);
         }
 }
 void DLL_loggedin::retrieveAndSetTilis() {
@@ -88,6 +101,7 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
 }
 void DLL_loggedin::logOutClickedHandler()
 {
+     bts.play();
     emit logOutClicked();
 }
 void DLL_loggedin::omistajaSlot(QNetworkReply *reply)

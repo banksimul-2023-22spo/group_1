@@ -1,6 +1,6 @@
 #ifndef DLL_LOGGEDIN_H
 #define DLL_LOGGEDIN_H
-
+#include <QSound>
 #include <QDialog>
 #include <DLL_loggedin_global.h>
 #include <QtNetwork>
@@ -22,7 +22,7 @@ public:
 
 signals:
     void logOutClicked();
-    void sendIdTili(QString);
+    void sendIdTili(QString,QString,QString);
 
 private slots:
     void btnClickedHandler();
@@ -36,12 +36,13 @@ private:
     QString tili2;
     Ui::DLL_loggedin *ui;
     QByteArray token;
-    QString idkortti;
-    void setUsername();
-    QString username;
+    QString idkortti;   
+    QString etunimi;
+    QString sukunimi;
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
-    QByteArray response_data;
+    QByteArray response_data;   
+    QSound bts;
 };
 
 #endif // DLL_LOGGEDIN_H
