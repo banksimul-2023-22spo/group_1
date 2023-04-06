@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QObject::connect(&testi, SIGNAL(logOutClicked()),
+    this, SLOT(logOutAndClose()));
 
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
@@ -78,6 +80,7 @@ MainWindow::~MainWindow()
     qDebug() << datas;
     SerialInfo = QString(datas);
     ui->labelInfo->setText("Syötä pin koodi");
+
     Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
         //qDebug()<<port.serialNumber();
@@ -145,19 +148,23 @@ MainWindow::~MainWindow()
 void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
 
+
     testi.getTili(tili,etunimi,sukunimi);
 
     testi.transportToken(token);
+    testi.getTili(tili);
+    testi.getTransactions("no");
     testi.getBalanceAndCredit("saldo");
     testi.getBalanceAndCredit("credit");
     testi.show();
-
 
 }
 
 void MainWindow::numberClickedHandler()
 {
+
    bts.play();
+
     if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
@@ -178,7 +185,9 @@ void MainWindow::numberClickedHandler()
 
 void MainWindow::EraseLoginRemoveClickhandler()
 {
+
     bts.play();
+
     if(SerialInfo==NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
@@ -194,7 +203,11 @@ void MainWindow::EraseLoginRemoveClickhandler()
         }
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
+
+            jsonObj.insert("idkortti","1234");
+
             jsonObj.insert("idkortti","2222");
+
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -220,6 +233,7 @@ void MainWindow::logOutAndClose()
 {
     // Log out and close all windows
     DLLlogin.close();
+    testi.close();
     clearAll();
 
     // Show the login window again
@@ -232,11 +246,14 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     response_data=reply->readAll();
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
+
+        SerialInfo="1234";
+        token = response_data;
+
         SerialInfo="2222";        
 
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
-
 
     }
     else{
