@@ -1,7 +1,7 @@
 QT += gui
 QT += widgets
 QT += network
-
+QT       += multimedia
 TEMPLATE = lib
 DEFINES += CHOOSEACTION_LIBRARY
 

@@ -38,9 +38,12 @@ QByteArray chooseAction::transportToken(QByteArray token)
     return 0;
 }
 
-void chooseAction::getTili(QString a)
+void chooseAction::getTili(QString a, QString b, QString c)
 {
     tili=a;
+    etunimi=b;
+    sukunimi=c;
+
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)

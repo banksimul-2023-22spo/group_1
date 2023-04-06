@@ -20,7 +20,7 @@ public:
     void getBalanceAndCredit(QString);
     void getTransactions(QString, QString);
     QByteArray transportToken(QByteArray);
-    void getTili(QString);
+    void getTili(QString,QString,QString);
 
 private:
     Ui::chooseAction *ui;
@@ -30,6 +30,8 @@ private:
     QNetworkReply *reply;
 
     QString tili;
+    QString etunimi;
+    QString sukunimi;
 
     QString data;
 
