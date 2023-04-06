@@ -34,7 +34,7 @@ router.get('/getbykortti/:idkortti',function(request,response){
       }
     })
   });
-});
+
 
 
 router.get('/:idtili/saldo',function(request,response){
@@ -50,6 +50,8 @@ router.get('/:idtili/saldo',function(request,response){
               response.status(404).json({message: 'Tili not found'});
           }
         }
+        });
+
 
   });
   router.get('/:idtili/credit',function(request,response){

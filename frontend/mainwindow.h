@@ -39,12 +39,12 @@ private slots:
 
     void loginSlot (QNetworkReply *reply);
 
-    void SendIdTiliSlot(QString tili);
+    void SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi);
 
 
 private:
     Ui::MainWindow *ui;
-
+   // QSound bts;
     DLL_loggedin DLLlogin;
     DLL_endscene DLLendscene;
 
@@ -58,7 +58,7 @@ private:
     QString fakePin;
     QString SerialInfo = NULL;
     int SerialBytes;
-
+    QSound bts;
     void clearAll();
 
 };
