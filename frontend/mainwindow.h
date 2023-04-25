@@ -27,7 +27,7 @@ public:
     const QByteArray &getToken() const;
     void setToken(const QByteArray &newToken);
 
-    chooseAction testi;
+    chooseAction DLLchooseAction;
 
 private slots:
     //void getSerialInfo();

@@ -45,16 +45,19 @@ void chooseAction::getTili(QString a, QString b, QString c)
 {
     tili = a;
     qDebug()<<tili;
+    etunimi=b;
+    sukunimi=c;
+    ui->nameLabel->setText(etunimi+" "+sukunimi);
 }
 
 void chooseAction::clearAll()
 {
     ui->Balance->clear();
     ui->Credit->clear();
-
-    tili=a;
-    etunimi=b;
-    sukunimi=c;
+    tili.clear();
+    ui->listWidget->clear();
+    etunimi.clear();
+    sukunimi.clear();
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)

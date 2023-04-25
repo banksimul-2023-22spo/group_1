@@ -9,18 +9,18 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
-     bts("C:/Users/Jorku/Desktop/group_1/group_1/frontend/Äänet/buttonclick.wav")
+     bts("C:/Users/Ville/Downloads/button-15.wav")
 {
     ui->setupUi(this);
 
-    QObject::connect(&testi, SIGNAL(logOutClicked()),
+    QObject::connect(&DLLchooseAction, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
-    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString)),
-    this, SLOT(SendIdTiliSlot(QString)));
+    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString, QString, QString)),
+    this, SLOT(SendIdTiliSlot(QString, QString, QString)));
 
     ui->btnRemove->setVisible(false);
 
@@ -72,8 +72,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-/*void MainWindow::getSerialInfo()
+/*
+void MainWindow::getSerialInfo()
 {
 
     QByteArray datas = "1234";
@@ -144,20 +144,16 @@ MainWindow::~MainWindow()
 
 
 
-
 void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
+    qDebug()<<"tilislot käynnistyy";
 
-
-    testi.getTili(tili,etunimi,sukunimi);
-
-    testi.transportToken(token);
-    testi.getTili(tili);
-    testi.getTransactions("no");
-    testi.getBalanceAndCredit("saldo");
-    testi.getBalanceAndCredit("credit");
-    testi.show();
-
+    DLLchooseAction.getTili(tili,etunimi,sukunimi);
+    DLLchooseAction.transportToken(token);
+    DLLchooseAction.getTransactions("no");
+    DLLchooseAction.getBalanceAndCredit("saldo");
+    DLLchooseAction.getBalanceAndCredit("credit");
+    DLLchooseAction.show();
 }
 
 void MainWindow::numberClickedHandler()
@@ -204,9 +200,9 @@ void MainWindow::EraseLoginRemoveClickhandler()
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
 
-            jsonObj.insert("idkortti","1234");
+            //jsonObj.insert("idkortti","1234");
 
-            jsonObj.insert("idkortti","2222");
+            jsonObj.insert("idkortti","1234");
 
             jsonObj.insert("pinkoodi",pin);
 
@@ -233,11 +229,10 @@ void MainWindow::logOutAndClose()
 {
     // Log out and close all windows
     DLLlogin.close();
-    testi.close();
+    DLLchooseAction.close();
     clearAll();
 
     // Show the login window again
-
 
 }
 
@@ -250,7 +245,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
         SerialInfo="1234";
         token = response_data;
 
-        SerialInfo="2222";        
+       // SerialInfo="2222";
 
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
