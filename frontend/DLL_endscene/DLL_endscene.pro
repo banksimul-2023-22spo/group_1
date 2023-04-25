@@ -12,11 +12,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dll_endscene.cpp
+    dll_endscene.cpp \
+    enviroment.cpp
 
 HEADERS += \
     DLL_endscene_global.h \
-    dll_endscene.h
+    dll_endscene.h \
+    enviroment.h
 
 # Default rules for deployment.
 unix {

@@ -42,6 +42,7 @@ private slots:
 
 signals:
     void logOutClicked();
+    void sendSumma(QString);
 };
 
 #endif // WITHDRAW_H

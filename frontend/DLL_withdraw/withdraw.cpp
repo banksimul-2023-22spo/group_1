@@ -167,6 +167,13 @@ void withdraw::ClickerHandler()
                     if (jsonString.contains("false")){
                         ui->labelNomoney->setText("Tilin kate ei riitä");
                     }
+                    else {
+                        if (summa != NULL){
+                            clearAll();
+                            emit sendSumma(summa);
+                            emit logOutClicked();
+                        }
+                    }
                     reply->deleteLater();
                     manager->deleteLater();
                 });
