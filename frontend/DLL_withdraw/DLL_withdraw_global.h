@@ -1,0 +1,12 @@
+#ifndef DLL_WITHDRAW_GLOBAL_H
+#define DLL_WITHDRAW_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(DLL_WITHDRAW_LIBRARY)
+#  define DLL_WITHDRAW_EXPORT Q_DECL_EXPORT
+#else
+#  define DLL_WITHDRAW_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // DLL_WITHDRAW_GLOBAL_H
