@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
-
+#include <withdraw.h>
 #include "chooseaction.h"
 
 
@@ -41,13 +41,17 @@ private slots:
 
     void SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi);
 
+    void sendTiliandToken(QString tili, QByteArray token);
+
+    void changeinfo(QString summa);
+
 
 private:
     Ui::MainWindow *ui;
    // QSound bts;
     DLL_loggedin DLLlogin;
     DLL_endscene DLLendscene;
-
+    withdraw DLLwithdraw;
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;

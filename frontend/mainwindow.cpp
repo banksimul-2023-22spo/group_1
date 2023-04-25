@@ -16,11 +16,20 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&testi, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
+    QObject::connect(&DLLwithdraw, SIGNAL(logOutClicked()),
+                     this, SLOT(logOutAndClose()));
+
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
-    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString)),
-    this, SLOT(SendIdTiliSlot(QString)));
+    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString, QString, QString)),
+    this, SLOT(SendIdTiliSlot(QString, QString, QString)));
+
+    QObject::connect(&testi, SIGNAL(nostaRahaaClicked(QString, QByteArray)),
+                     this, SLOT(sendTiliandToken(QString, QByteArray)));
+
+    QObject::connect(&DLLwithdraw, SIGNAL(sendSumma(QString)),
+                     this, SLOT(changeinfo(QString)));
 
     ui->btnRemove->setVisible(false);
 
@@ -147,17 +156,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
-
-
     testi.getTili(tili,etunimi,sukunimi);
-
     testi.transportToken(token);
-    testi.getTili(tili);
     testi.getTransactions("no");
     testi.getBalanceAndCredit("saldo");
     testi.getBalanceAndCredit("credit");
     testi.show();
+    DLLendscene.getTili(tili,etunimi,sukunimi);
+    DLLendscene.transportToken(token);
 
+
+}
+
+void MainWindow::sendTiliandToken(QString tili, QByteArray token)
+{
+    DLLwithdraw.settili_token(tili, token);
+    DLLwithdraw.show();
 }
 
 void MainWindow::numberClickedHandler()
@@ -232,8 +246,16 @@ void MainWindow::EraseLoginRemoveClickhandler()
 void MainWindow::logOutAndClose()
 {
     // Log out and close all windows
+    DLLendscene.getinfo("saldo");
+    DLLendscene.getinfo("credit");
     DLLlogin.close();
     testi.close();
+    DLLwithdraw.close();
+    DLLendscene.show();
+    QTimer::singleShot(5000, this,[this](){
+        DLLendscene.close();
+        DLLendscene.changetext();
+    });
     clearAll();
 
     // Show the login window again
@@ -289,3 +311,7 @@ void MainWindow::setToken(const QByteArray &newToken)
     token = newToken;
 }
 
+void MainWindow::changeinfo(QString summa)
+{
+    DLLendscene.changeinfo(summa);
+}

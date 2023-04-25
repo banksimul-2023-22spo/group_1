@@ -43,6 +43,7 @@ private slots:
 
 signals:
     void logOutClicked();
+    void nostaRahaaClicked(QString, QByteArray);
 
 };
 

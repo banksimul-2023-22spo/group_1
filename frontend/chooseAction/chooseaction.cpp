@@ -43,7 +43,9 @@ QByteArray chooseAction::transportToken(QByteArray token)
 
 void chooseAction::getTili(QString a, QString b, QString c)
 {
-    tili = a;
+    tili=a;
+    etunimi=b;
+    sukunimi=c;
     qDebug()<<tili;
 }
 
@@ -52,9 +54,6 @@ void chooseAction::clearAll()
     ui->Balance->clear();
     ui->Credit->clear();
 
-    tili=a;
-    etunimi=b;
-    sukunimi=c;
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)
@@ -159,6 +158,7 @@ void chooseAction::ClickerHandler()
     QString name = button->objectName();
     if(name == "Withdraw"){
         qDebug() << "Button name:" << name;
+        emit nostaRahaaClicked(tili, tokenValue);
 
     }
     else if(name == "Transactions"){
