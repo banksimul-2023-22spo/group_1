@@ -22,6 +22,16 @@ router.get('/:idtilitapahtumat',function(request,response){
         }
     })
 });
+router.get('/getbytiliid/:idtili',function(request,response){
+  tilitapahtumat.getByTiliId(request.params.idtili, function(err,dbResult){
+      if(err){
+          response.json(err);
+      }
+      else{
+          response.json(dbResult);
+      }
+  })
+});
 router.post('/', 
 function(request, response) {
   tilitapahtumat.add(request.body, function(err, dbResult) {
