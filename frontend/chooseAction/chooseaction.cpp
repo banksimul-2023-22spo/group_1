@@ -12,7 +12,7 @@ chooseAction::chooseAction(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
+    //Clicker handlers for buttons
     connect(ui->Withdraw,SIGNAL(clicked()),
             this,SLOT(ClickerHandler()),Qt::QueuedConnection);
 
@@ -24,9 +24,6 @@ chooseAction::chooseAction(QWidget *parent) :
 
     connect(ui->logOut,SIGNAL(clicked()),
             this,SLOT(logOutClickerHandler()),Qt::QueuedConnection);
-
-    connect(ui->logOut,SIGNAL(clicked()),
-            this,SLOT(logOutClickerHandler()),Qt::QueuedConnection);
 }
 
 chooseAction::~chooseAction()
@@ -34,49 +31,53 @@ chooseAction::~chooseAction()
     delete ui;
 }
 
+//Get the token from fronted (exe)
 QByteArray chooseAction::transportToken(QByteArray token)
 {
     tokenValue = token;
-    qDebug()<<"tämän pitäis olla token: "<<token;
     return 0;
 }
 
+//Transport info from DLL_loggedin
 void chooseAction::getTili(QString a, QString b, QString c)
 {
-    tili = a;
-    qDebug()<<tili;
+    tili=a;
     etunimi=b;
     sukunimi=c;
-    ui->nameLabel->setText(etunimi+" "+sukunimi);
+    qDebug()<<tili;
 }
 
 void chooseAction::clearAll()
 {
     ui->Balance->clear();
     ui->Credit->clear();
-    tili.clear();
     ui->listWidget->clear();
+    tili.clear();
     etunimi.clear();
     sukunimi.clear();
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)
 {
+        //Determine url-endpoint
         QString site_url=Enviroment::getBaseUrl()+"/tili/"+tili+"/"+balOrCred;
         QNetworkRequest request((site_url));
 
+        //Include web-token in the request
         QString web_token = tokenValue;
         request.setRawHeader("Authorization", ("Bearer " + web_token).toUtf8());
 
+        //Create manager for reply
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         QNetworkReply *reply = manager->get(request);
 
+        //Connect to database and check for errors
         connect(reply, &QNetworkReply::finished, [=]() {
             if (reply->error() == QNetworkReply::NoError) {
                 QString response = reply->readAll();
+
                 QJsonDocument jsonDoc = QJsonDocument::fromJson(response.toUtf8());
                 QJsonObject jsonObj = jsonDoc.object();
-
                 float saldo = jsonObj["saldo"].toDouble();
                 float credit = jsonObj["credit"].toDouble();
                 QString saldoValue = QString::number(saldo);
@@ -101,24 +102,30 @@ void chooseAction::getBalanceAndCredit(QString balOrCred)
 
 void chooseAction::getTransactions(QString showAll)
 {
+        //Determine url-endpoint
         QString site_url=Enviroment::getBaseUrl()+"/tilitapahtumat/getbytiliid/"+tili;
         QNetworkRequest request((site_url));
 
+        //Include web-token in the request
         QString web_token = tokenValue;
         request.setRawHeader("Authorization", ("Bearer " + web_token).toUtf8());
 
+        //Create manager for reply
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
         QNetworkReply *reply = manager->get(request);
 
+        //Connect to database and check for errors
         connect(reply, &QNetworkReply::finished, [=]() {
             if (reply->error() == QNetworkReply::NoError) {
                 QString response = reply->readAll();
+
                 qDebug()<<"response: "<<response;
                 QJsonDocument json_doc = QJsonDocument::fromJson(response.toUtf8());
                 QJsonArray json_array = json_doc.array();
                 QJsonObject json_obj = json_doc.object();
                 QString data;
                 qDebug()<<data;
+
                 foreach (const QJsonValue &value, json_array){
                     QJsonObject json_obj = value.toObject();
                     float summa = json_obj["summa"].toDouble();
@@ -127,10 +134,8 @@ void chooseAction::getTransactions(QString showAll)
                     QString date =  aikaValue.left(10);
                     QString time =  aikaValue.right(15);
                     time =  time.mid(2,8);
-
                     qDebug()<<summaValue;
                     data += "Päivämäärä:  "+ date +"   "+ time +"    |    -"+ summaValue +"€\n";
-
                 }
 
                 qDebug()<<data;
@@ -153,15 +158,16 @@ void chooseAction::getTransactions(QString showAll)
                 qDebug() << "error in connecting to database: " << reply->errorString();
             }
         });
-
 }
 
 void chooseAction::ClickerHandler()
 {
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString name = button->objectName();
+
     if(name == "Withdraw"){
         qDebug() << "Button name:" << name;
+        emit nostaRahaaClicked(tili, tokenValue);
 
     }
     else if(name == "Transactions"){

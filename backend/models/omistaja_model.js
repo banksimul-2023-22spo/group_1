@@ -2,7 +2,6 @@ const db = require('../database');
 
 const omistaja = {
     getAll: function (callback) {
-        response.json("efsf");
         return db.query('select * from omistaja', callback);
     },
     getById: function (idomistaja, callback) {

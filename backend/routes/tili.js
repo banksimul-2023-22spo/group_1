@@ -53,6 +53,8 @@ router.get('/:idtili/saldo',function(request,response){
       })
 });
 
+
+  
 router.get('/:idtili/credit',function(request,response){
 
   tili.getCreditById(request.params.idtili, function(err,dbResult){
@@ -68,8 +70,8 @@ router.get('/:idtili/credit',function(request,response){
           }
       }
   });
+  
 });
-
 router.post('/', 
 function(request, response) {
   tili.add(request.body, function(err, dbResult) {
@@ -80,6 +82,7 @@ function(request, response) {
       response.json(dbResult.affectedRows);
     }
   });
+
 });
 router.delete('/:idtili', 
 function(request, response) {
@@ -99,6 +102,21 @@ function(request, response) {
     } else {
       response.json(dbResult.affectedRows);
     }
+  });
+});
+router.put('/nosto/:idtili/:summa', 
+function(request, response) {
+  tili.withdraw(request.params.idtili, request.params.summa, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+
+    } else if (dbResult && Object.keys(dbResult).length === 0) {
+      response.status(200).json(false);
+    }
+      else {
+    //response.json(dbResult);
+    response.json(dbResult.affectedRows);
+      }
   });
 });
 

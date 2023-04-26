@@ -16,16 +16,24 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&DLLchooseAction, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
+    QObject::connect(&DLLwithdraw, SIGNAL(logOutClicked()),
+                     this, SLOT(logOutAndClose()));
+
     QObject::connect(&DLLlogin, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
 
-    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString, QString, QString)),
-    this, SLOT(SendIdTiliSlot(QString, QString, QString)));
+    QObject::connect(&DLLlogin, SIGNAL(sendIdTili(QString,QString,QString)),
+    this, SLOT(SendIdTiliSlot(QString,QString,QString)));
+
+    QObject::connect(&DLLchooseAction, SIGNAL(nostaRahaaClicked(QString,QByteArray)),
+                     this, SLOT(sendTiliandToken(QString,QByteArray)));
+
+    QObject::connect(&DLLwithdraw, SIGNAL(sendSumma(QString)),
+                     this, SLOT(changeinfo(QString)));
 
     ui->btnRemove->setVisible(false);
 
     //QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
-
 
     connect(ui->btn0,SIGNAL(clicked()),
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
@@ -147,18 +155,25 @@ void MainWindow::getSerialInfo()
 void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
     qDebug()<<"tilislot käynnistyy";
-
     DLLchooseAction.getTili(tili,etunimi,sukunimi);
     DLLchooseAction.transportToken(token);
     DLLchooseAction.getTransactions("no");
     DLLchooseAction.getBalanceAndCredit("saldo");
     DLLchooseAction.getBalanceAndCredit("credit");
     DLLchooseAction.show();
+
+    DLLendscene.getTili(tili,etunimi,sukunimi);
+    DLLendscene.transportToken(token);
+}
+
+void MainWindow::sendTiliandToken(QString tili, QByteArray token)
+{
+    DLLwithdraw.settili_token(tili, token);
+    DLLwithdraw.show();
 }
 
 void MainWindow::numberClickedHandler()
 {
-
    bts.play();
 
     if(SerialInfo==NULL){
@@ -173,15 +188,12 @@ void MainWindow::numberClickedHandler()
             ui->labelPin->setText(QString(fakePin));
 
             qDebug() << "PIN:" << pin;
-
         }
     }
-
 }
 
 void MainWindow::EraseLoginRemoveClickhandler()
 {
-
     bts.play();
 
     if(SerialInfo==NULL){
@@ -199,11 +211,7 @@ void MainWindow::EraseLoginRemoveClickhandler()
         }
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
-
-            //jsonObj.insert("idkortti","1234");
-
             jsonObj.insert("idkortti","1234");
-
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -216,10 +224,7 @@ void MainWindow::EraseLoginRemoveClickhandler()
             reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
         }
         else{
-
             clearAll();
-
-
         }
     }
 
@@ -228,12 +233,20 @@ void MainWindow::EraseLoginRemoveClickhandler()
 void MainWindow::logOutAndClose()
 {
     // Log out and close all windows
+    DLLendscene.getinfo("saldo");
+    DLLendscene.getinfo("credit");
     DLLlogin.close();
     DLLchooseAction.close();
+    DLLwithdraw.close();
+
+    DLLendscene.show();
+    QTimer::singleShot(5000, this,[this](){
+        DLLendscene.close();
+        DLLendscene.changetext();
+    });
+
     clearAll();
-
     // Show the login window again
-
 }
 
 void MainWindow::loginSlot(QNetworkReply *reply)
@@ -244,12 +257,8 @@ void MainWindow::loginSlot(QNetworkReply *reply)
 
         SerialInfo="1234";
         token = response_data;
-
-       // SerialInfo="2222";
-
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
-
     }
     else{
         ui->labelInfo->setText("Väärä pin koodi");
@@ -284,3 +293,7 @@ void MainWindow::setToken(const QByteArray &newToken)
     token = newToken;
 }
 
+void MainWindow::changeinfo(QString summa)
+{
+    DLLendscene.changeinfo(summa);
+}

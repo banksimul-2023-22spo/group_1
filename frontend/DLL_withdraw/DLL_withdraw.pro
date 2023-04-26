@@ -1,9 +1,9 @@
-QT       += core gui
-QT       += multimedia
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT -= gui
+QT += widgets
+QT += network
 
 TEMPLATE = lib
-DEFINES += DLL_ENDSCENE_LIBRARY
+DEFINES += DLL_WITHDRAW_LIBRARY
 
 CONFIG += c++17
 
@@ -12,13 +12,11 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dll_endscene.cpp \
-    enviroment.cpp
+    withdraw.cpp
 
 HEADERS += \
-    DLL_endscene_global.h \
-    dll_endscene.h \
-    enviroment.h
+    DLL_withdraw_global.h \
+    withdraw.h
 
 # Default rules for deployment.
 unix {
@@ -27,4 +25,4 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    dll_endscene.ui
+    withdraw.ui

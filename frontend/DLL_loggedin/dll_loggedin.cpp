@@ -7,6 +7,7 @@
 DLL_loggedin::DLL_loggedin(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DLL_loggedin),
+
     bts("C:/Users/Jorku/Desktop/group_1/group_1/frontend/Äänet/buttonclick.wav")
 
 {
@@ -16,7 +17,6 @@ DLL_loggedin::DLL_loggedin(QWidget *parent) :
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
-
 
     qDebug()<<"dll olio luotu";
 
@@ -82,7 +82,6 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonArray tilis = doc.array();
 
-
     // Set the button names
     if (tilis.size() >= 1) {
         QString idtili1 = tilis.at(0).toObject()["idtili"].toString();
@@ -99,7 +98,7 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
 }
 void DLL_loggedin::logOutClickedHandler()
 {
-     bts.play();
+    bts.play();
     emit logOutClicked();
 }
 void DLL_loggedin::omistajaSlot(QNetworkReply *reply)

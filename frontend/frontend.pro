@@ -27,11 +27,12 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/release/ -lDLL_loggedin
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/debug/ -lDLL_loggedin
 
-INCLUDEPATH += $$PWD/DLL_loggedin
-DEPENDPATH += $$PWD/DLL_loggedin
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/chooseAction/build/release/ -lchooseAction
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/chooseAction/build/debug/ -lchooseAction
+
+INCLUDEPATH += $$PWD/chooseAction
+DEPENDPATH += $$PWD/chooseAction
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_endscene/build/release/ -lDLL_endscene
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_endscene/build/debug/ -lDLL_endscene
@@ -39,10 +40,14 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_endscene/build/debu
 INCLUDEPATH += $$PWD/DLL_endscene
 DEPENDPATH += $$PWD/DLL_endscene
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/release/ -lDLL_loggedin
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_loggedin/build/debug/ -lDLL_loggedin
 
+INCLUDEPATH += $$PWD/DLL_loggedin
+DEPENDPATH += $$PWD/DLL_loggedin
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/chooseAction/build/release/ -lchooseAction
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/chooseAction/build/debug/ -lchooseAction
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/DLL_withdraw/build/release/ -lDLL_withdraw
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/DLL_withdraw/build/debug/ -lDLL_withdraw
 
-INCLUDEPATH += $$PWD/chooseAction
-DEPENDPATH += $$PWD/chooseAction
+INCLUDEPATH += $$PWD/DLL_withdraw
+DEPENDPATH += $$PWD/DLL_withdraw

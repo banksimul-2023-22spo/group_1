@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include <dll_loggedin.h>
 #include <dll_endscene.h>
-
+#include <withdraw.h>
 #include "chooseaction.h"
 
 
@@ -27,27 +27,23 @@ public:
     const QByteArray &getToken() const;
     void setToken(const QByteArray &newToken);
 
-    chooseAction DLLchooseAction;
-
 private slots:
     //void getSerialInfo();
     void numberClickedHandler();
-
     void logOutAndClose();
-
     void EraseLoginRemoveClickhandler();
-
     void loginSlot (QNetworkReply *reply);
-
     void SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi);
-
+    void sendTiliandToken(QString tili, QByteArray token);
+    void changeinfo(QString summa);
 
 private:
     Ui::MainWindow *ui;
    // QSound bts;
+    chooseAction DLLchooseAction;
     DLL_loggedin DLLlogin;
     DLL_endscene DLLendscene;
-
+    withdraw DLLwithdraw;
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
@@ -60,6 +56,5 @@ private:
     int SerialBytes;
     QSound bts;
     void clearAll();
-
 };
 #endif // MAINWINDOW_H

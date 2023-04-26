@@ -17,14 +17,11 @@ class chooseAction : public QDialog
 public:
     explicit chooseAction(QWidget *parent = nullptr);
     ~chooseAction();
+
     void getBalanceAndCredit(QString);
     void getTransactions(QString);
     QByteArray transportToken(QByteArray);
-
-    void getTili(QString);
-    void clearAll();
     void getTili(QString,QString,QString);
-
 
 private:
     Ui::chooseAction *ui;
@@ -36,6 +33,7 @@ private:
     QString etunimi;
     QString sukunimi;
     QString data;
+    void clearAll();
 
 private slots:
     void ClickerHandler();
@@ -43,6 +41,7 @@ private slots:
 
 signals:
     void logOutClicked();
+    void nostaRahaaClicked(QString, QByteArray);
 
 };
 

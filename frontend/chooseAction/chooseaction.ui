@@ -22,8 +22,8 @@
   <widget class="QLabel" name="BalanceText">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>220</y>
+     <x>220</x>
+     <y>150</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -40,8 +40,8 @@
   <widget class="QLabel" name="CreditText">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>270</y>
+     <x>220</x>
+     <y>200</y>
      <width>71</width>
      <height>31</height>
     </rect>
@@ -58,8 +58,8 @@
   <widget class="QLabel" name="Balance">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>220</y>
+     <x>300</x>
+     <y>150</y>
      <width>211</width>
      <height>31</height>
     </rect>
@@ -76,8 +76,8 @@
   <widget class="QLabel" name="Credit">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>270</y>
+     <x>300</x>
+     <y>200</y>
      <width>211</width>
      <height>31</height>
     </rect>
@@ -94,15 +94,15 @@
   <widget class="QPushButton" name="Withdraw">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>350</y>
-     <width>141</width>
-     <height>41</height>
+     <x>210</x>
+     <y>290</y>
+     <width>181</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>16</pointsize>
     </font>
    </property>
    <property name="text">
@@ -112,15 +112,15 @@
   <widget class="QPushButton" name="Transactions">
    <property name="geometry">
     <rect>
-     <x>640</x>
-     <y>350</y>
-     <width>141</width>
-     <height>41</height>
+     <x>400</x>
+     <y>290</y>
+     <width>181</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>16</pointsize>
     </font>
    </property>
    <property name="text">
@@ -131,9 +131,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>560</y>
-     <width>101</width>
-     <height>31</height>
+     <y>550</y>
+     <width>121</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -143,10 +143,10 @@
   <widget class="QPushButton" name="logOut">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>560</y>
-     <width>101</width>
-     <height>31</height>
+     <x>670</x>
+     <y>550</y>
+     <width>121</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -156,47 +156,11 @@
   <widget class="QListWidget" name="listWidget">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>220</y>
+     <x>210</x>
+     <y>350</y>
      <width>371</width>
      <height>121</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Kirjautuneena:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="nameLabel">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>10</y>
-     <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
    </property>
   </widget>
  </widget>
