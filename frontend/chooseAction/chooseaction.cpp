@@ -55,6 +55,7 @@ void chooseAction::clearAll()
     tili.clear();
     etunimi.clear();
     sukunimi.clear();
+
 }
 
 void chooseAction::getBalanceAndCredit(QString balOrCred)

@@ -133,9 +133,9 @@ void withdraw::ClickerHandler()
         ui ->lineSumma->setText("10");
     }
     else if(name == "btnBack"){
-            qDebug() << "Button name:" << name;
-            clearAll();
-            close();
+        qDebug() << "Button name:" << name;
+        clearAll();
+        close();
     }
     else if(name == "btnTeeNosto"){
         qDebug() << "Button name:" << name;
@@ -172,6 +172,7 @@ void withdraw::ClickerHandler()
                     reply->deleteLater();
                     manager->deleteLater();
                 });
+
         qDebug() <<reply;
         getBalanceAndCredit("saldo");
         getBalanceAndCredit("credit");

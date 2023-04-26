@@ -54,22 +54,22 @@ router.get('/:idtili/saldo',function(request,response){
 });
 
 
-  
-router.get('/:idtili/credit',function(request,response){
 
-  tili.getCreditById(request.params.idtili, function(err,dbResult){
-      if(err){
-          response.json(err);
-      }
-      else{
-          if (dbResult.length > 0) {
-              const credit = dbResult[0].credit;
-              response.json({credit: credit});
-          } else {
-              response.status(404).json({message: 'Tili not found'});
-          }
-      }
-  });
+  router.get('/:idtili/credit',
+  function(request,response) {
+    tili.getCreditById(request.params.idtili, function(err,dbResult){
+        if(err){
+            response.json(err);
+        }
+        else{
+            if (dbResult.length > 0) {
+                const credit = dbResult[0].credit;
+                response.json({credit: credit});
+            } else {
+                response.status(404).json({message: 'Tili not found'});
+            }
+        }
+    });
   
 });
 router.post('/', 

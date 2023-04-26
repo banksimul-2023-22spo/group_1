@@ -37,6 +37,7 @@ private slots:
     void sendTiliandToken(QString tili, QByteArray token);
     void changeinfo(QString summa);
 
+
 private:
     Ui::MainWindow *ui;
    // QSound bts;

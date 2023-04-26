@@ -238,7 +238,7 @@ void MainWindow::logOutAndClose()
     DLLlogin.close();
     DLLchooseAction.close();
     DLLwithdraw.close();
-
+    
     DLLendscene.show();
     QTimer::singleShot(5000, this,[this](){
         DLLendscene.close();
