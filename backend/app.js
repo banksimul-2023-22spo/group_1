@@ -27,9 +27,8 @@ app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/omistaja', omistajaRouter);
 app.use('/kortti', korttiRouter);
-app.use('/tili', tiliRouter);
-
 app.use(authenticateToken);
+app.use('/tili', tiliRouter);
 app.use('/tilitapahtumat', tilitapahtumatRouter);
 
 function authenticateToken(req, res, next) {

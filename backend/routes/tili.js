@@ -36,8 +36,6 @@ router.get('/getbykortti/:idkortti',function(request,response){
 
 });
 
-
-
 router.get('/:idtili/saldo',function(request,response){
   tili.getSaldoById(request.params.idtili, function(err,dbResult){
         if(err){
@@ -56,8 +54,9 @@ router.get('/:idtili/saldo',function(request,response){
 });
 
 
-  router.get('/:idtili/credit',function(request,response){
 
+  router.get('/:idtili/credit',
+  function(request,response) {
     tili.getCreditById(request.params.idtili, function(err,dbResult){
         if(err){
             response.json(err);
@@ -71,6 +70,7 @@ router.get('/:idtili/saldo',function(request,response){
             }
         }
     });
+  
 });
 router.post('/', 
 function(request, response) {
@@ -82,6 +82,7 @@ function(request, response) {
       response.json(dbResult.affectedRows);
     }
   });
+
 });
 router.delete('/:idtili', 
 function(request, response) {

@@ -3,9 +3,6 @@
 #define ENVIROMENT_H
 #include <QString>
 
-
-
-
 class enviroment
 {
 public:

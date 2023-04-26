@@ -34,8 +34,6 @@ private:
     QString Data;
     QByteArray response_data;
 
-
-
 private slots:
     void ClickerHandler();
     void logOutClickerHandler();

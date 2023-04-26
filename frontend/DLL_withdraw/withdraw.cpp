@@ -119,33 +119,29 @@ void withdraw::ClickerHandler()
     if(name == "btn100e"){
         qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("100");
-
     }
     else if(name == "btn50e"){
         qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("50");
-
     }
     else if(name == "btn20e"){
         qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("20");
-
     }
     else if(name == "btn10e"){
         qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("10");
     }
-        else if(name == "btnBack"){
-            qDebug() << "Button name:" << name;
-            clearAll();
-            close();
+    else if(name == "btnBack"){
+        qDebug() << "Button name:" << name;
+        clearAll();
+        close();
     }
     else if(name == "btnTeeNosto"){
         qDebug() << "Button name:" << name;
         summa = ui->lineSumma->text();
 
         QString web_token = token;
-
         QNetworkAccessManager* manager = new QNetworkAccessManager(this);
 
         // Set up the URL and request headers
@@ -157,7 +153,6 @@ void withdraw::ClickerHandler()
 
         // Send the PUT request
         QNetworkReply* reply = manager->put(request, QByteArray());
-
 
         // Handle the response
         connect(reply, &QNetworkReply::finished, [=]() {
@@ -178,9 +173,6 @@ void withdraw::ClickerHandler()
                     manager->deleteLater();
                 });
 
-
-
-
         qDebug() <<reply;
         getBalanceAndCredit("saldo");
         getBalanceAndCredit("credit");
@@ -192,7 +184,6 @@ void withdraw::clearAll()
     ui->lineSumma->clear();
     ui->labelSaldo->setText("Saldo:");
     ui->labelCredit->setText("Credit:");
-
     tili.clear();
 }
 

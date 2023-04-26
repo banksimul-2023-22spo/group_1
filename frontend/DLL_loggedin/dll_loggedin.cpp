@@ -7,16 +7,16 @@
 DLL_loggedin::DLL_loggedin(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DLL_loggedin),
+
     bts("C:/Users/Jorku/Desktop/group_1/group_1/frontend/Äänet/buttonclick.wav")
 
 {
     ui->setupUi(this);
-    QPixmap bkgnd("C:/Users/Jorku/Desktop/group_1/group_1/frontend/DLL_loggedin/bankphoto.png");
+    QPixmap bkgnd("D:/kuvat/turhaa/4751001585732_0.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
-
 
     qDebug()<<"dll olio luotu";
 
@@ -40,8 +40,6 @@ void DLL_loggedin::setToken_idKortti(QByteArray a, QString b)
    qDebug()<<"DLL-token > "+token;
    qDebug()<<"DLL-idkortti(serialinfo) > "+idkortti;
 
-
-
    loginManager = new QNetworkAccessManager(this);
    connect(loginManager, SIGNAL(finished(QNetworkReply*)),
            this, SLOT(omistajaSlot(QNetworkReply*)));
@@ -55,15 +53,15 @@ void DLL_loggedin::setToken_idKortti(QByteArray a, QString b)
 void DLL_loggedin::btnClickedHandler()
 {
 
-    bts.play();
+    //bts.play();
 
     QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString text = button->text();
         if(text == tili1){
-          //  qDebug() << "Button name:" << text;
+            qDebug() << "Button name:" << text;
             emit sendIdTili(tili1,etunimi,sukunimi);
         }else if(text == tili2){
-          //  qDebug() << "Button name:" << text;
+            qDebug() << "Button name:" << text;
             emit sendIdTili(tili2,etunimi,sukunimi);
         }
 }
@@ -84,7 +82,6 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     QJsonArray tilis = doc.array();
 
-
     // Set the button names
     if (tilis.size() >= 1) {
         QString idtili1 = tilis.at(0).toObject()["idtili"].toString();
@@ -101,7 +98,7 @@ void DLL_loggedin::tilisReplyFinished(QNetworkReply *reply) {
 }
 void DLL_loggedin::logOutClickedHandler()
 {
-     bts.play();
+    bts.play();
     emit logOutClicked();
 }
 void DLL_loggedin::omistajaSlot(QNetworkReply *reply)
@@ -116,8 +113,8 @@ void DLL_loggedin::omistajaSlot(QNetworkReply *reply)
     QJsonDocument doc = QJsonDocument::fromJson(response_data);
     QJsonArray arr = doc.array();
     QJsonObject obj = arr.at(0).toObject();
-    QString etunimi = obj["etunimi"].toString();
-    QString sukunimi = obj["sukunimi"].toString();
+    etunimi = obj["etunimi"].toString();
+    sukunimi = obj["sukunimi"].toString();
     qDebug()<<etunimi;
     qDebug()<<sukunimi;
     // Display owner's name in UI
