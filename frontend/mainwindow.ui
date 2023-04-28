@@ -269,9 +269,9 @@
    <widget class="QPushButton" name="btnRemove">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>310</x>
       <y>380</y>
-      <width>131</width>
+      <width>171</width>
       <height>41</height>
      </rect>
     </property>
@@ -306,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

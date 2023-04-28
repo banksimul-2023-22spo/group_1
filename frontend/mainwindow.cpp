@@ -3,15 +3,19 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QtSerialPort>
-#include <QAudio>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
-     bts("C:/Users/Ville/Downloads/button-15.wav")
+     bts("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/button.wav")
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/taustaa.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
     QObject::connect(&DLLchooseAction, SIGNAL(logOutClicked()),
     this, SLOT(logOutAndClose()));
@@ -33,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->btnRemove->setVisible(false);
 
-    //QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+    QTimer::singleShot(2000, this, SLOT(getSerialInfo()));
 
     connect(ui->btn0,SIGNAL(clicked()),
             this,SLOT(numberClickedHandler()),Qt::QueuedConnection);
@@ -80,14 +84,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-/*
+
 void MainWindow::getSerialInfo()
 {
-
-    QByteArray datas = "1234";
-    qDebug() << datas;
-    SerialInfo = QString(datas);
-    ui->labelInfo->setText("Syötä pin koodi");
 
     Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()){
         //qDebug()<<port.portName();
@@ -123,7 +122,7 @@ void MainWindow::getSerialInfo()
                     qDebug() << "New data available: " << serial.bytesAvailable();
                     SerialBytes = serial.bytesAvailable();
                     QByteArray datas = serial.readAll();
-                    qDebug() << datas;
+                    //qDebug() << datas;
                     SerialInfo = QString(datas);
                     serial.close();
                     ui->labelInfo->setText("Syötä pin koodi");
@@ -132,29 +131,29 @@ void MainWindow::getSerialInfo()
             }
             if(SerialBytes == 16){
                 SerialInfo = SerialInfo.mid(2,11);
-                qDebug() << SerialInfo;
+                //qDebug() << SerialInfo;
             }
             else{
                 SerialInfo = SerialInfo.mid(18,11);
-                qDebug() << SerialInfo;
+                //qDebug() << SerialInfo;
             }
 
         }
         else{
 
             QByteArray datas = "1234";
-            qDebug() << datas;
+            //qDebug() << datas;
             SerialInfo = QString(datas);
             ui->labelInfo->setText("Syötä pin koodi");
         }
 
-    }*/
-
+    }
+}
 
 
 void MainWindow::SendIdTiliSlot(QString tili, QString etunimi, QString sukunimi)
 {
-    qDebug()<<"tilislot käynnistyy";
+    //qDebug()<<"tilislot käynnistyy";
     DLLchooseAction.getTili(tili,etunimi,sukunimi);
     DLLchooseAction.transportToken(token);
     DLLchooseAction.getTransactions("no");
@@ -176,7 +175,7 @@ void MainWindow::numberClickedHandler()
 {
    bts.play();
 
-    if(SerialInfo==NULL){
+    if(SerialInfo!=NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -187,7 +186,7 @@ void MainWindow::numberClickedHandler()
             fakePin = fakePin + "*";
             ui->labelPin->setText(QString(fakePin));
 
-            qDebug() << "PIN:" << pin;
+            //qDebug() << "PIN:" << pin;
         }
     }
 }
@@ -196,7 +195,7 @@ void MainWindow::EraseLoginRemoveClickhandler()
 {
     bts.play();
 
-    if(SerialInfo==NULL){
+    if(SerialInfo!=NULL){
         QPushButton * button = qobject_cast<QPushButton*>(sender());
         QString name = button->objectName();
         //qDebug() << "Button name:" << name;
@@ -207,11 +206,11 @@ void MainWindow::EraseLoginRemoveClickhandler()
             fakePin = fakePin.left(fakePin.length()-1);
             ui->labelPin->setText(QString(fakePin));
 
-            qDebug() << "PIN:" << pin;
+            //qDebug() << "PIN:" << pin;
         }
         else if(name == "btnLogin") {
             QJsonObject jsonObj;
-            jsonObj.insert("idkortti","1234");
+            jsonObj.insert("idkortti",SerialInfo);
             jsonObj.insert("pinkoodi",pin);
 
             QString site_url=Enviroment::getBaseUrl()+"/login";
@@ -255,7 +254,6 @@ void MainWindow::loginSlot(QNetworkReply *reply)
     if(QString::compare(response_data, "false")!=0){
         ui->labelInfo->setText("login ok");
 
-        SerialInfo="1234";
         token = response_data;
         DLLlogin.setToken_idKortti(response_data,SerialInfo);
         DLLlogin.show();
@@ -273,6 +271,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)
 
 void MainWindow::clearAll()
 {
+    DLLchooseAction.clearAll();
     ui->labelInfo->setText("Syötä kortti");
     ui->labelPin->clear();
     ui->btnRemove->setVisible(false);
@@ -280,7 +279,7 @@ void MainWindow::clearAll()
     fakePin.clear();
     pin.clear();
     token.clear();
-    //QTimer::singleShot(1000, this, SLOT(getSerialInfo()));
+    QTimer::singleShot(6000, this, SLOT(getSerialInfo()));
 }
 
 const QByteArray &MainWindow::getToken() const

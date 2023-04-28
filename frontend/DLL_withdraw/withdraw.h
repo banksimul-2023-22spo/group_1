@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QtNetwork>
 #include <QJsonDocument>
+#include <QSound>
 
 namespace Ui {
 class withdraw;
@@ -33,6 +34,7 @@ private:
     QByteArray Response;
     QString Data;
     QByteArray response_data;
+    QSound bts;
 
 private slots:
     void ClickerHandler();

@@ -5,9 +5,15 @@
 
 withdraw::withdraw(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::withdraw)
+    ui(new Ui::withdraw),
+    bts("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/button.wav")
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/taustaa.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
     connect(ui->btn100e,SIGNAL(clicked()),
             this,SLOT(ClickerHandler()),Qt::QueuedConnection);
@@ -67,12 +73,12 @@ void withdraw::getBalanceAndCredit(QString balOrCred)
                 QString CreditValue = QString::number(credit);
 
                 if(balOrCred == "saldo"){
-                    ui->labelSaldo->setText("saldo: "+saldoValue);
-                    qDebug() << balOrCred+": "<<response;
+                    ui->labelSaldo->setText("saldo: "+saldoValue+"€");
+                    //qDebug() << balOrCred+": "<<response;
                 }
                 else if(balOrCred == "credit"){
-                    ui->labelCredit->setText("credit: "+CreditValue);
-                    qDebug() << balOrCred+": "<<response;
+                    ui->labelCredit->setText("credit: "+CreditValue+"€");
+                    //qDebug() << balOrCred+": "<<response;
                 }
 
             } else {
@@ -83,29 +89,6 @@ void withdraw::getBalanceAndCredit(QString balOrCred)
         });
 }
 
-void withdraw::makeWithdraw()
-{
-    QString site_url=getBaseUrl();
-    QNetworkRequest request((site_url));
-
-    QString web_token = token;
-    request.setRawHeader("Authorization", ("Bearer " + web_token).toUtf8());
-
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QNetworkReply *reply = manager->get(request);
-
-    connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error() == QNetworkReply::NoError) {
-            QString response = reply->readAll();
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(response.toUtf8());
-            QJsonObject jsonObj = jsonDoc.object();
-
-        reply->deleteLater();
-        manager->deleteLater();
-        }
-    });
-}
-
 
 QString withdraw::getBaseUrl()
 {
@@ -114,31 +97,32 @@ QString withdraw::getBaseUrl()
 
 void withdraw::ClickerHandler()
 {
+    bts.play();
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString name = button->objectName();
     if(name == "btn100e"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("100");
     }
     else if(name == "btn50e"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("50");
     }
     else if(name == "btn20e"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("20");
     }
     else if(name == "btn10e"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         ui ->lineSumma->setText("10");
     }
     else if(name == "btnBack"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         clearAll();
         close();
     }
     else if(name == "btnTeeNosto"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         summa = ui->lineSumma->text();
 
         QString web_token = token;
@@ -158,7 +142,7 @@ void withdraw::ClickerHandler()
         connect(reply, &QNetworkReply::finished, [=]() {
                     response_data=reply->readAll();
                     QString jsonString = QString::fromUtf8(response_data);
-                    qDebug()<<jsonString;
+                    //qDebug()<<jsonString;
                     if (jsonString.contains("false")){
                         ui->labelNomoney->setText("Tilin kate ei riitä");
                     }
@@ -173,7 +157,7 @@ void withdraw::ClickerHandler()
                     manager->deleteLater();
                 });
 
-        qDebug() <<reply;
+        //qDebug() <<reply;
         getBalanceAndCredit("saldo");
         getBalanceAndCredit("credit");
     }
@@ -189,8 +173,9 @@ void withdraw::clearAll()
 
 void withdraw::logOutClickerHandler()
 {
+    bts.play();
     clearAll();
     emit logOutClicked();
-    qDebug()<<"logouttia painettu";
+    //qDebug()<<"logouttia painettu";
 }
 

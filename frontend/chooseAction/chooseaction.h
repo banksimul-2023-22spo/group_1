@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QtNetwork>
 #include <QJsonDocument>
+#include <QSound>
 
 namespace Ui {
 class chooseAction;
@@ -22,6 +23,7 @@ public:
     void getTransactions(QString);
     QByteArray transportToken(QByteArray);
     void getTili(QString,QString,QString);
+    void clearAll();
 
 private:
     Ui::chooseAction *ui;
@@ -33,7 +35,7 @@ private:
     QString etunimi;
     QString sukunimi;
     QString data;
-    void clearAll();
+    QSound bts;
 
 private slots:
     void ClickerHandler();
