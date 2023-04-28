@@ -2,6 +2,7 @@
 #define MYDATA_H
 
 #include <QDialog>
+#include <QSound>
 
 namespace Ui {
 class Transactions;
@@ -20,6 +21,7 @@ public:
 private:
     Ui::Transactions *ui;
     QString myData;
+    QSound bts;
 
 private slots:
     void clickerHandler();

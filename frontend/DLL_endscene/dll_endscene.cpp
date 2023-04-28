@@ -10,6 +10,11 @@ DLL_endscene::DLL_endscene(QWidget *parent) :
     ui(new Ui::DLL_endscene)
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/taustaa.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
 }
 
@@ -18,6 +23,7 @@ DLL_endscene::~DLL_endscene()
     delete ui;
 }
 
+//hakee saldo ja credit
 void DLL_endscene::getinfo(QString balorcred)
 {
     QString site_url=enviroment::getBaseUrl()+"/tili/"+tili+"/"+balorcred;
@@ -41,12 +47,12 @@ void DLL_endscene::getinfo(QString balorcred)
             QString CreditValue = QString::number(credit);
 
         if(balorcred == "saldo"){
-                ui->txtsaldo->setText("saldo: "+saldoValue);
-                qDebug() << balorcred+": "<<response;
+                ui->txtsaldo->setText("saldo: "+saldoValue+"€");
+                //qDebug() << balorcred+": "<<response;
             }
             else if(balorcred == "credit"){
-            ui->txtcredit->setText("credit: "+CreditValue);
-                qDebug() << balorcred+": "<<response;
+            ui->txtcredit->setText("credit: "+CreditValue+"€");
+                //qDebug() << balorcred+": "<<response;
             }
 
         } else {
@@ -61,7 +67,7 @@ void DLL_endscene::getinfo(QString balorcred)
 QByteArray DLL_endscene::transportToken(QByteArray token)
 {
     tokenValue = token;
-    qDebug()<<"tämän pitäis olla token: "<<token;
+    //qDebug()<<"tämän pitäis olla token: "<<token;
         return 0;
 }
 
@@ -70,7 +76,7 @@ void DLL_endscene::getTili(QString a, QString b, QString c)
         tili = a;
         etunimi = b;
         sukunimi = c;
-        qDebug()<<tili;
+        //qDebug()<<tili;
 }
 
 void DLL_endscene::changeinfo(QString summa)

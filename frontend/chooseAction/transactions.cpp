@@ -7,9 +7,15 @@
 
 Transactions::Transactions(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Transactions)
+    ui(new Ui::Transactions),
+    bts("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/button.wav")
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/taustaa.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
     connect(ui->pushButton,SIGNAL(clicked()),
             this,SLOT(clickerHandler()),Qt::QueuedConnection);
@@ -22,9 +28,9 @@ Transactions::~Transactions()
 
 void Transactions::setMyData(const QString &newMyData)
 {
-    qDebug()<<"dawdadawd";
+    //qDebug()<<"dawdadawd";
     myData = newMyData;
-    qDebug()<<myData;
+    //qDebug()<<myData;
     QTextEdit *textEdit = new QTextEdit(this); // create the text edit widget
     textEdit->setReadOnly(true); // set the text edit to be read-only
     textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn); // set the vertical scrollbar policy
@@ -36,6 +42,7 @@ void Transactions::setMyData(const QString &newMyData)
 
 void Transactions::clickerHandler()
 {
+    bts.play();
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString name = button->objectName();
     if(name == "pushButton"){

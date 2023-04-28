@@ -28,7 +28,7 @@ public:
     void setToken(const QByteArray &newToken);
 
 private slots:
-    //void getSerialInfo();
+    void getSerialInfo();
     void numberClickedHandler();
     void logOutAndClose();
     void EraseLoginRemoveClickhandler();
@@ -40,7 +40,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-   // QSound bts;
     chooseAction DLLchooseAction;
     DLL_loggedin DLLlogin;
     DLL_endscene DLLendscene;

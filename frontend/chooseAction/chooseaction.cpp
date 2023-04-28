@@ -4,13 +4,20 @@
 #include <QDebug>
 #include "enviroment.h"
 #include <QJsonDocument>
+#include <QAudio>
 
 
 chooseAction::chooseAction(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::chooseAction)
+    ui(new Ui::chooseAction),
+    bts("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/button.wav")
 {
     ui->setupUi(this);
+    QPixmap bkgnd("C:/Users/jeres/Documents/Koulu/pankkiprojekti/group_1/frontend/Äänet/taustaa.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
 
     //Clicker handlers for buttons
     connect(ui->Withdraw,SIGNAL(clicked()),
@@ -44,7 +51,7 @@ void chooseAction::getTili(QString a, QString b, QString c)
     tili=a;
     etunimi=b;
     sukunimi=c;
-    qDebug()<<tili;
+    //qDebug()<<tili;
 }
 
 void chooseAction::clearAll()
@@ -85,12 +92,12 @@ void chooseAction::getBalanceAndCredit(QString balOrCred)
                 QString CreditValue = QString::number(credit);
 
                 if(balOrCred == "saldo"){
-                    ui->Balance->setText(saldoValue);
-                    qDebug() << balOrCred+": "<<response;
+                    ui->Balance->setText(saldoValue+"€");
+                    //qDebug() << balOrCred+": "<<response;
                 }
                 else if(balOrCred == "credit"){
-                    ui->Credit->setText(CreditValue);
-                    qDebug() << balOrCred+": "<<response;
+                    ui->Credit->setText(CreditValue+"€");
+                    //qDebug() << balOrCred+": "<<response;
                 }
 
             } else {
@@ -120,12 +127,12 @@ void chooseAction::getTransactions(QString showAll)
             if (reply->error() == QNetworkReply::NoError) {
                 QString response = reply->readAll();
 
-                qDebug()<<"response: "<<response;
+                //qDebug()<<"response: "<<response;
                 QJsonDocument json_doc = QJsonDocument::fromJson(response.toUtf8());
                 QJsonArray json_array = json_doc.array();
                 QJsonObject json_obj = json_doc.object();
                 QString data;
-                qDebug()<<data;
+                //qDebug()<<data;
 
                 foreach (const QJsonValue &value, json_array){
                     QJsonObject json_obj = value.toObject();
@@ -135,11 +142,11 @@ void chooseAction::getTransactions(QString showAll)
                     QString date =  aikaValue.left(10);
                     QString time =  aikaValue.right(15);
                     time =  time.mid(2,8);
-                    qDebug()<<summaValue;
-                    data += "Päivämäärä:  "+ date +"   "+ time +"    |    -"+ summaValue +"€\n";
+                    //qDebug()<<summaValue;
+                    data += "Päivämäärä:  "+ date +"    |    -"+ summaValue +"€\n";
                 }
 
-                qDebug()<<data;
+                //qDebug()<<data;
                 if(showAll == "no"){
                     QStringList lines = data.split("\n");
                     QString lessData = lines.mid(0, 7).join("\n");;
@@ -149,7 +156,7 @@ void chooseAction::getTransactions(QString showAll)
                 if(showAll == "yes"){
                     Transactions *objTransactions=new Transactions(this);
                     objTransactions->setMyData(data);
-                    qDebug()<<data;
+                    //qDebug()<<data;
                     objTransactions->open();
                     reply->deleteLater();
                     manager->deleteLater();
@@ -163,21 +170,22 @@ void chooseAction::getTransactions(QString showAll)
 
 void chooseAction::ClickerHandler()
 {
+    bts.play();
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString name = button->objectName();
 
     if(name == "Withdraw"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         emit nostaRahaaClicked(tili, tokenValue);
 
     }
     else if(name == "Transactions"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         getTransactions("yes");
 
     }
     else if(name == "Back"){
-        qDebug() << "Button name:" << name;
+        //qDebug() << "Button name:" << name;
         clearAll();
         close();
     }  
@@ -185,6 +193,7 @@ void chooseAction::ClickerHandler()
 
 void chooseAction::logOutClickerHandler()
 {
+    bts.play();
     clearAll();
     emit logOutClicked();
 }
